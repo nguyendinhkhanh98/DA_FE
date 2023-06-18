@@ -1,0 +1,268 @@
+{
+  "asset-management": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 1,
+      "developer": 1,
+      "tester": 1,
+      "guest": 0,
+      "asset_admin": 1,
+      "accountant": 1
+    }
+  },
+  "asset-manager-dashboard": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 1,
+      "developer": 1,
+      "tester": 1,
+      "guest": 0,
+      "asset_admin": 1,
+      "accountant": 1
+    }
+  },
+  "asset-type-management": {
+    "view-access": {
+      "admin": 1,
+      "manager": 0,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "asset_admin": 1,
+      "accountant": 0
+    }
+  },
+  "asset-import-excel": {
+    "view-access": {
+      "admin": 1,
+      "manager": 0,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "asset_admin": 1,
+      "accountant": 0
+    }
+  },
+  "asset-export-excel": {
+    "view-access": {
+      "admin": 1,
+      "manager": 0,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "asset_admin": 1,
+      "accountant": 0
+    }
+  },
+  "user-management": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "accountant": 0
+    }
+  },
+  "home": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 1,
+      "developer": 1,
+      "tester": 1,
+      "guest": 0,
+      "accountant": 1
+    }
+  },
+  "register-calendar": {
+    "view-access": {
+      "admin": 0,
+      "manager": 0,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "intern": 1
+    }
+  },
+  "intern-management": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 1,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "intern": 0
+    }
+  },
+  "skill-set-management": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 1,
+      "developer": 1,
+      "tester": 1,
+      "intern": 1,
+      "guest": 0
+    }
+  },
+  "skill-set-structure-category": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0
+    }
+  },
+  "list-intern": {
+    "view-access": {
+      "admin": 0,
+      "manager": 0,
+      "leader": 1,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0
+    }
+  },
+  "skill-set-period-management": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0
+    }
+  },
+  "analysis-history-offwork": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 1,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "accountant": 1
+    }
+  },
+  "employee-management": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 1,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "accountant": 0
+    }
+  },
+  "company-management": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 1,
+      "developer": 1,
+      "tester": 1,
+      "guest": 0,
+      "accountant": 1
+    }
+  },
+  "hr-management": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 1,
+      "developer": 1,
+      "tester": 1,
+      "guest": 0,
+      "accountant": 1
+    }
+  },
+  "skill-set-sumarry-report-by-user": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "accountant": 0
+    }
+  },
+  "jira-project-config": {
+    "view-access": {
+      "admin": 1,
+      "manager": 1,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "accountant": 0
+    }
+  },
+  "financial": {
+    "view-access": {
+      "admin": 1,
+      "manager": 0,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "accountant": 0
+    }
+  },
+  "export-report-by-invoice": {
+    "view-access": {
+      "admin": 1,
+      "manager": 0,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "accountant": 0
+    }
+  },
+  "management-task": {
+    "view-access": {
+      "admin": 1,
+      "manager": 0,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "accountant": 0
+    }
+  },
+  "business-skill-category": {
+    "view-access": {
+      "admin": 1,
+      "manager": 0,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "accountant": 0
+    }
+  },
+  "slack-integration": {
+    "view-access": {
+      "admin": 1,
+      "manager": 0,
+      "leader": 0,
+      "developer": 0,
+      "tester": 0,
+      "guest": 0,
+      "accountant": 0
+    }
+  }
+}

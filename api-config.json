@@ -1,0 +1,66 @@
+{
+  "api.login": {
+    "url": "/api/login",
+    "method": "post"
+  },
+  "api.logout": {
+    "url": "/api/logout",
+    "method": "post"
+  },
+  "api.issue.export": {
+    "url": "/api/issue/export",
+    "method": "post"
+  },
+  "api.issue.originData.export": {
+    "url": "/api/issue/origin-data/export",
+    "method": "post"
+  },
+  "api.issue.index": {
+    "url": "/api/issue",
+    "method": "post"
+  },
+  "api.issue.count": {
+    "url": "/api/issue/count",
+    "method": "post"
+  },
+  "api.project.index": {
+    "url": "/api/project",
+    "method": "get"
+  },
+  "api.issue.status": {
+    "url": "/api/issue/status",
+    "method": "get"
+  },
+  "api.issue.user.assignable": {
+    "url": "/api/issue/user/assignable",
+    "method": "get"
+  },
+  "api.issue.createmeta": {
+    "url": "api/issue/createmeta",
+    "method": "get"
+  },
+  "api.sprint": {
+    "url": "/api/sprint",
+    "method": "get"
+  },
+  "api.getUserWorklogs": {
+    "url": "/api/get-user-worklogs",
+    "method": "post"
+  },
+  "api.timeSheet": {
+    "url": "/api/time-sheet",
+    "method": "post"
+  },
+  "api.timeSheetUser": {
+    "url": "/api/time-sheet-user",
+    "method": "post"
+  },
+  "api.timeSheetTask": {
+    "url": "/api/time-sheet-task",
+    "method": "post"
+  },
+  "api.timeSheetTask.export": {
+    "url": "/api/time-sheet-task/export",
+    "method": "post"
+  }
+}

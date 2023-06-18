@@ -1,0 +1,383 @@
+<template>
+  <a-row class="header-content">
+    <div class="ant-col-xs-0 ant-col-sm-0 ant-col-md-18 ant-col-lg-19 ant-col-xl-19 ant-col-xxl-20">
+      <a-menu mode="horizontal" class="w-100">
+        <SiderNode v-for="menu of siders" :menuItemData="menu" :role="role" :key="menu.key" :parent-node="true" />
+      </a-menu>
+    </div>
+
+    <div
+      class="ant-col-xs-24 ant-col-sm-24 ant-col-md-6 ant-col-lg-5 ant-col-xl-5 ant-col-xxl-4 header-left right-tool-bar"
+    >
+      <a-button
+        class="ant-btn ant-col-md-0"
+        @click="isDrawerVisible = !isDrawerVisible"
+        style="color: white; position: absolute; top: 7px; left: 4px"
+      >
+        <i style="color: rgba(0, 0, 0, 0.65) " class="fa fa-align-justify" />
+      </a-button>
+
+      <a-dropdown class="mt-2 mr-2">
+        <a-menu slot="overlay" @click="onChangeLanguage">
+          <a-menu-item key="ja"> <a-icon :component="Ja" />日本語 </a-menu-item>
+          <a-menu-item key="vi"> <a-icon :component="Vi" />Tiếng Việt </a-menu-item>
+          <a-menu-item key="en"> <a-icon :component="En" />English </a-menu-item>
+        </a-menu>
+        <a-button style="margin-left: 8px"> {{ $t("language") }} </a-button>
+      </a-dropdown>
+
+      <a-dropdown class="mt-2" overlayClassName="cust-menu" :trigger="['click']">
+        <a-menu slot="overlay" mode="horizontal">
+          <SiderNode
+            v-for="company of companyNav"
+            :menuItemData="company"
+            :role="role"
+            :key="company.key"
+            :parent-node="false"
+        /></a-menu>
+
+        <a-tooltip title="Admin area" :getPopupContainer="a => a.parentNode">
+          <a-button style="margin-left: 8px" icon="bank" shape="circle" />
+        </a-tooltip>
+      </a-dropdown>
+
+      <a-menu @click="onClickMenu" mode="horizontal">
+        <template v-for="menu of headers">
+          <template v-if="menu.items && menu.items.length">
+            <a-sub-menu :style="menu.position ? { float: 'right' } : {}" :key="menu.key">
+              <span slot="title">
+                {{ userFullName }}
+              </span>
+              <template v-for="item of menu.items">
+                <template v-if="item.subItems && item.subItems.length">
+                  <a-sub-menu :key="item.key">
+                    <span slot="title" class="title mr-3">
+                      <i :class="item.icon"></i>
+                      {{ $t(item.name) }}
+                    </span>
+                    <a-menu-item v-for="subItem in item.subItems" :key="subItem.key">
+                      <nuxt-link :to="subItem.link">
+                        <i :class="subItem.icon"></i>
+                        {{ $t(subItem.name) }}
+                      </nuxt-link>
+                    </a-menu-item>
+                  </a-sub-menu>
+                </template>
+                <template v-else>
+                  <a-menu-item :key="item.key">
+                    <template v-if="item.key === 'language'">
+                      <i :class="item.icon"></i>
+                      {{ $t(item.name) }}:
+                      <a-tooltip placement="bottom" :title="$t('en')">
+                        <img class="mr-1" src="@/static/img/en-flag.png" @click="onChangeLanguage('en')" />
+                      </a-tooltip>
+                      <a-tooltip placement="bottom" :title="$t('ja')">
+                        <img class="mr-1" src="@/static/img/ja-flag.png" @click="onChangeLanguage('ja')" />
+                      </a-tooltip>
+                    </template>
+                    <nuxt-link v-else :to="item.link">
+                      <i :class="item.icon"></i>
+                      {{ $t(item.name) }}
+                    </nuxt-link>
+                  </a-menu-item>
+                </template>
+              </template>
+            </a-sub-menu>
+          </template>
+
+          <template v-else>
+            <a-menu-item :style="menu.position ? { float: 'right' } : {}" :key="menu.key">
+              <nuxt-link :to="menu.link">
+                <i :class="menu.icon"></i>
+                {{ $t(menu.name) }}
+              </nuxt-link>
+            </a-menu-item>
+          </template>
+        </template>
+      </a-menu>
+    </div>
+
+    <a-drawer
+      placement="top"
+      :closable="false"
+      @close="isDrawerVisible = false"
+      :visible="isDrawerVisible"
+      :bodyStyle="{ padding: 0 }"
+    >
+      <a-menu class="mobile-menu">
+        <SiderNode
+          v-for="menu of siders"
+          :menuItemData="menu"
+          :role="role"
+          :key="menu.key"
+          :parent-node="true"
+          isOnMobile
+          @click="isDrawerVisible = false"
+        />
+      </a-menu>
+    </a-drawer>
+  </a-row>
+</template>
+
+<script>
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+import headers from "@/utils/header";
+import siders from "@/utils/sider";
+import { localize } from "vee-validate";
+
+import Vi from "@/components/Common/Language/vi.vue";
+import En from "@/components/Common/Language/en.vue";
+import Ja from "@/components/Common/Language/ja.vue";
+import SelectProject from "@/components/Common/SelectProject";
+import SiderNode from "@/components/Common/Sider/SiderNode.vue";
+import Navigation from "@/components/Common/Navigation";
+
+export default {
+  data() {
+    return {
+      Vi,
+      En,
+      Ja,
+      headers,
+      siders,
+      lang: "en",
+      companyNav: [
+        {
+          key: "user-management",
+          name: "user_management",
+          "a-icon": "team",
+          link: "/user-management",
+          items: []
+        },
+        {
+          key: "intern-management",
+          name: "intern_management",
+          "a-icon": "contacts",
+          link: "/intern-management",
+          items: [
+            {
+              key: "view-time",
+              name: "view_time",
+              icon: "fas fa-calendar-week mr-2",
+              link: "/intern-management/view-time",
+              items: []
+            },
+            {
+              key: "list-intern",
+              name: "list_intern",
+              icon: "fas fa-users mr-2",
+              link: "/intern-management/list-intern",
+              items: []
+            },
+            {
+              key: "list-salary",
+              name: "list_salary",
+              icon: "fas fa-file-invoice-dollar mr-2",
+              link: "/intern-management/list-salary",
+              items: []
+            }
+          ]
+        },
+        {
+          key: "asset-management",
+          name: "asset_management",
+          "a-icon": "cluster",
+          link: "",
+          items: [
+            {
+              key: "asset-manager-dashboard",
+              name: "asset_management",
+              icon: "fas fa-tachometer-alt mr-2",
+              link: "/asset-management",
+              items: []
+            },
+            {
+              key: "asset-type-management",
+              name: "asset_type_management",
+              icon: "fas fa-tasks mr-2",
+              link: "/asset-type-management",
+              items: []
+            },
+            {
+              key: "asset-import-excel",
+              name: "import_excel",
+              icon: "fas fa-file-excel mr-2",
+              link: "/asset-management/import",
+              items: []
+            },
+            {
+              key: "asset-export-excel",
+              name: "export_excel",
+              icon: "fas fa-file-excel mr-2",
+              link: "/asset-management/export",
+              items: []
+            }
+          ]
+        },
+        {
+          key: "hr-management",
+          name: "hr_management",
+          "a-icon": "solution",
+          items: [
+            {
+              key: "analysis-history-offwork",
+              name: "analysis_history_offwork",
+              icon: "fas fa-chart-line mr-2",
+              link: "/hr-management/analysis"
+            },
+            {
+              key: "human-resource-by-project",
+              name: "human_resource_by_project",
+              icon: "fas fa-chart-line mr-2",
+              link: "/hr-management/hr-by-project"
+            }
+          ]
+        },
+        {
+          key: "slack-integration",
+          name: "slack_integration",
+          icon: "fab fa-slack mr-2",
+          items: [
+            {
+              key: "send-worklog-report",
+              name: "send_worklog_report",
+              icon: "fas fa-paper-plane mr-2"
+            },
+            {
+              key: "config-issue-report",
+              name: "config_issue_report",
+              icon: "fas fa-cog mr-2",
+              link: "/config-issue-report"
+            }
+          ]
+        }
+      ],
+      isDrawerVisible: false
+    };
+  },
+  components: {
+    SelectProject,
+    SiderNode,
+    Navigation
+  },
+  mounted() {
+    // Match to new token
+    if (!Array.isArray(this.role)) this.logout();
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.userInfo
+    }),
+    ...mapGetters({
+      role: "role"
+    }),
+    userFullName() {
+      return this.userInfo && this.userInfo.fullName;
+    }
+  },
+  methods: {
+    ...mapMutations({
+      setLanguage: "setLanguage"
+    }),
+    ...mapActions({
+      logout: "modules/auth/logout"
+    }),
+    onClickMenu({ item, key, keyPath }) {
+      switch (key) {
+        case "logout":
+          this.logout();
+          break;
+        default:
+          break;
+      }
+    },
+    onChangeLanguage(e) {
+      let lang = e.key;
+      this.lang = lang;
+      this.$i18n.locale = lang;
+      localize(lang);
+      this.$moment.locale(lang);
+      this.setLanguage(lang);
+      localStorage.setItem("lang", lang);
+    }
+  }
+};
+</script>
+
+<style lang="less" scoped>
+.header-content {
+  .right-tool-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.trigger {
+  font-size: 18px;
+  line-height: 48px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.right-bar {
+  vertical-align: middle;
+  float: right;
+}
+</style>
+
+<style lang="less">
+.cust-menu .ant-dropdown-menu-item,
+.ant-dropdown-menu-submenu-title {
+  margin: 5px;
+}
+
+.ant-drawer-body {
+  padding: 0px;
+}
+.ant-drawer-body .ant-menu-submenu-title .menu-title {
+  color: black;
+}
+.ant-drawer.ant-drawer-top.ant-drawer-open {
+  top: 47px;
+  z-index: 10;
+}
+.ant-drawer.ant-drawer-top {
+  z-index: 10;
+}
+.mobile-menu {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+}
+.mobile-menu i.ant-menu-submenu-arrow {
+  display: none;
+}
+.mobile-menu .menu-title * {
+  display: flex;
+  justify-content: center;
+}
+.mobile-menu:before {
+  content: none;
+}
+.ant-drawer-content-wrapper {
+  height: auto !important;
+}
+.mobile-menu li {
+  margin: 10px 0px;
+}
+.mobile-menu .ant-menu-submenu-title {
+  overflow: visible;
+}
+.mobile-menu .ant-menu-item:last-child {
+  margin: auto auto;
+}
+.mobile-menu .ant-btn.ant-btn-primary {
+  padding: 5px;
+}
+.mobile-menu .fa-plus {
+  margin-right: 3px !important;
+}
+.mobile-menu .ant-menu-item {
+  margin-top: 14px;
+}
+</style>

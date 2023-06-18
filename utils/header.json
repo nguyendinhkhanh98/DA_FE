@@ -1,0 +1,45 @@
+[
+  {
+    "key": "ellipsis",
+    "name": "",
+    "icon": "fas fa-chevron-down",
+    "link": "",
+    "position": 1,
+    "hideDownIcon": false,
+    "items": [
+      {
+        "key": "edit-profile",
+        "name": "edit_profile",
+        "icon": "fas fa-edit mr-1",
+        "link": "/edit-profile",
+        "subItems": []
+      },
+      {
+        "key": "change-password",
+        "name": "change_password",
+        "icon": "fas fa-unlock mr-1",
+        "link": "/change-password",
+        "subItems": []
+      },
+      {
+        "key": "hr-management-dashboard",
+        "name": "hr_management_dashboard",
+        "icon": "fas fa-edit mr-2",
+        "link": "/take-leave"
+      },
+      {
+        "key": "view-history-offwork",
+        "name": "view_history_offwork",
+        "icon": "fas fa-history mr-2",
+        "link": "/history-off-work"
+      },
+      {
+        "key": "logout",
+        "name": "logout",
+        "icon": "fas fa-sign-out-alt mr-1",
+        "link": "",
+        "subItems": []
+      }
+    ]
+  }
+]

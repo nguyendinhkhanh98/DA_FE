@@ -1,0 +1,241 @@
+[
+  {
+    "key": "home",
+    "name": "dashboard",
+    "a-icon": "dashboard",
+    "link": "/",
+    "items": []
+  },
+  {
+    "key": "register-calendar",
+    "name": "register_calendar",
+    "a-icon": "calendar",
+    "link": "/register-calendar",
+    "items": []
+  },
+  {
+    "key": "skill-set-management",
+    "name": "skill_set",
+    "a-icon": "book",
+    "items": [
+      {
+        "key": "skill-set-period-management",
+        "name": "period_management",
+        "icon": "far fa-bookmark mr-2",
+        "link": "/skill-set/period"
+      },
+      {
+        "key": "engineer-skill",
+        "name": "engineer_skill",
+        "icon": "fas fa-tools mr-2",
+        "link": "",
+        "items": [
+          {
+            "key": "skill-set-create-assessment",
+            "name": "create_assessment",
+            "icon": "fas fa-plus mr-2",
+            "link": "/skill-set/add"
+          },
+          {
+            "key": "skill-set-dashboard",
+            "name": "list_assessment",
+            "icon": "far fa-list-alt mr-2",
+            "link": "/skill-set"
+          },
+          {
+            "key": "skill-set-structure-category",
+            "name": "skill_set_management",
+            "icon": "fas fa-cog mr-2",
+            "link": "/skill-set/category"
+          },
+
+          {
+            "key": "skill-set-compare",
+            "name": "compare_skill_set",
+            "icon": "fas fa-exchange-alt mr-2",
+            "link": "/skill-set/compare-skill-set"
+          }
+        ]
+      },
+      {
+        "key": "business-skill-set",
+        "name": "business_skill_set",
+        "icon": "fas fa-layer-group mr-2",
+        "link": "",
+        "items": [
+          {
+            "key": "create-assessment-business-skill",
+            "name": "create_assessment_business_skill",
+            "icon": "fas fa-plus mr-2",
+            "link": "/business-skill-set/add"
+          },
+          {
+            "key": "list-assessment-business-skill",
+            "name": "list_assessment_business_skill",
+            "icon": "far fa-list-alt mr-2",
+            "link": "/business-skill-set"
+          },
+          {
+            "key": "business-skill-category",
+            "name": "business_skill_category",
+            "icon": "fas fa-cog mr-2",
+            "link": "/business-skill-set/category"
+          }
+        ]
+      },
+      {
+        "key": "skill-set-sumarry-report-by-user",
+        "name": "download_skill_set_by_user",
+        "icon": "fas fa-download mr-2",
+        "link": "",
+        "items": [
+          {
+            "key": "skill-set_summary",
+            "name": "export_skill_set_summary",
+            "icon": "fas fa-download mr-2",
+            "link": "/skill-set/download-skill-set-summary"
+          },
+          {
+            "key": "skill-set-individual",
+            "name": "export_skill_set_individual",
+            "icon": "fas fa-download mr-2",
+            "link": "/skill-set/download-skill-set-by-user"
+          }
+        ]
+      },
+      {
+        "key": "management-task",
+        "name": "management_task",
+        "icon": "fas fa-tasks mr-2",
+        "link": "",
+        "items": [
+          {
+            "key": "create-task",
+            "name": "create_task",
+            "icon": "fas fa-plus mr-2",
+            "link": "/management-task/add"
+          },
+          {
+            "key": "list-task",
+            "name": "list_task",
+            "icon": "fas fa-list-ul mr-2",
+            "link": "/management-task"
+          },
+          {
+            "key": "employee-task-history",
+            "name": "employee_task_history",
+            "icon": "fas fa-history mr-2",
+            "link": "/employee-task-history"
+          },
+          {
+            "key": "project-role-config",
+            "name": "role_config",
+            "icon": "fas fa-user-tag mr-2",
+            "link": "/management-task/role-config"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "jira-integration",
+    "name": "jira_integration",
+    "icon": "fab fa-jira mr-2",
+    "link": "",
+    "items": [
+      {
+        "key": "summary-report-by-issue",
+        "name": "summary_report_by_issue",
+        "icon": "far fa-newspaper mr-2",
+        "link": "/summary-report-by-issue",
+        "items": []
+      },
+      {
+        "key": "export-report-by-invoice",
+        "name": "export_report_by_invoice",
+        "icon": "fas fa-file-excel mr-2",
+        "link": "/export-report-by-invoice",
+        "items": []
+      },
+      {
+        "key": "qcd-report",
+        "name": "qcd_report",
+        "icon": "fas fa-chart-line mr-2",
+        "link": "/summary-report-by-issue/qcd-report",
+        "items": []
+      },
+      {
+        "key": "summary-qcd-kpi",
+        "name": "summary_qcd_kpi",
+        "icon": "fas fa-chart-pie mr-2",
+        "link": "/summary-qcd-kpi",
+        "items": []
+      },
+      {
+        "key": "worklog-summary-by-user",
+        "name": "worklog_summary_by_user",
+        "a-icon": "user",
+        "link": "/worklog-summary-by-user",
+        "items": []
+      },
+      {
+        "key": "worklog-detail-by-user",
+        "name": "worklog_detail_by_user",
+        "a-icon": "user",
+        "link": "/worklog-detail-by-user",
+        "items": []
+      },
+      {
+        "key": "jira-project-config",
+        "name": "jira_project_config",
+        "icon": "fab fa-jira mr-2",
+        "link": "/jira-project-config",
+        "items": []
+      }
+    ]
+  },
+  {
+    "key": "financial",
+    "name": "financial",
+    "icon": "fas fa-file-invoice-dollar mr-2",
+    "link": "",
+    "items": [
+      {
+        "key": "invoice-management",
+        "name": "list_active_invoices",
+        "icon": "fas fa-file-invoice-dollar mr-2",
+        "link": "/invoice-management",
+        "items": []
+      }
+    ]
+  },
+  {
+    "key": "documents",
+    "name": "documents",
+    "icon": "fas fa-book mr-2",
+    "link": "",
+    "items": [
+      {
+        "key": "search-document",
+        "name": "search_document",
+        "icon": "fas fa-search mr-2",
+        "link": "/document",
+        "items": []
+      },
+      {
+        "key": "knowledge_graph",
+        "name": "knowledge_graph",
+        "icon": "fas fa-project-diagram mr-2",
+        "link": "/document/knowledge-graph",
+        "items": []
+      },
+      {
+        "key": "upload-document",
+        "name": "create_document",
+        "icon": "fas fa-upload mr-2",
+        "link": "/document/upload",
+        "items": []
+      }
+    ]
+  }
+]
