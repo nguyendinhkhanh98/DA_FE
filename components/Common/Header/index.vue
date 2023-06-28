@@ -14,7 +14,7 @@
         @click="isDrawerVisible = !isDrawerVisible"
         style="color: white; position: absolute; top: 7px; left: 4px"
       >
-        <i style="color: rgba(0, 0, 0, 0.65) " class="fa fa-align-justify" />
+        <i style="color: rgba(0, 0, 0, 0.65)" class="fa fa-align-justify" />
       </a-button>
 
       <a-dropdown class="mt-2 mr-2">
@@ -175,6 +175,38 @@ export default {
               icon: "fas fa-file-invoice-dollar mr-2",
               link: "/intern-management/list-salary",
               items: []
+            }
+          ]
+        },
+        {
+          key: "management-task",
+          name: "management_task",
+          icon: "fas fa-tasks mr-2",
+          link: "",
+          items: [
+            {
+              key: "create-task",
+              name: "create_task",
+              icon: "fas fa-plus mr-2",
+              link: "/management-task/add"
+            },
+            {
+              key: "list-task",
+              name: "list_task",
+              icon: "fas fa-list-ul mr-2",
+              link: "/management-task"
+            },
+            {
+              key: "employee-task-history",
+              name: "employee_task_history",
+              icon: "fas fa-history mr-2",
+              link: "/employee-task-history"
+            },
+            {
+              key: "project-role-config",
+              name: "role_config",
+              icon: "fas fa-user-tag mr-2",
+              link: "/management-task/role-config"
             }
           ]
         },
