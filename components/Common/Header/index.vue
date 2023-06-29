@@ -150,35 +150,6 @@ export default {
           items: []
         },
         {
-          key: "intern-management",
-          name: "intern_management",
-          "a-icon": "contacts",
-          link: "/intern-management",
-          items: [
-            {
-              key: "view-time",
-              name: "view_time",
-              icon: "fas fa-calendar-week mr-2",
-              link: "/intern-management/view-time",
-              items: []
-            },
-            {
-              key: "list-intern",
-              name: "list_intern",
-              icon: "fas fa-users mr-2",
-              link: "/intern-management/list-intern",
-              items: []
-            },
-            {
-              key: "list-salary",
-              name: "list_salary",
-              icon: "fas fa-file-invoice-dollar mr-2",
-              link: "/intern-management/list-salary",
-              items: []
-            }
-          ]
-        },
-        {
           key: "management-task",
           name: "management_task",
           icon: "fas fa-tasks mr-2",
@@ -207,6 +178,98 @@ export default {
               name: "role_config",
               icon: "fas fa-user-tag mr-2",
               link: "/management-task/role-config"
+            }
+          ]
+        },
+        {
+          key: "skill-set-management",
+          name: "skill_set",
+          "a-icon": "book",
+          items: [
+            {
+              key: "skill-set-period-management",
+              name: "period_management",
+              icon: "far fa-bookmark mr-2",
+              link: "/skill-set/period"
+            },
+            {
+              key: "engineer-skill",
+              name: "engineer_skill",
+              icon: "fas fa-tools mr-2",
+              link: "",
+              items: [
+                {
+                  key: "skill-set-create-assessment",
+                  name: "create_assessment",
+                  icon: "fas fa-plus mr-2",
+                  link: "/skill-set/add"
+                },
+                {
+                  key: "skill-set-dashboard",
+                  name: "list_assessment",
+                  icon: "far fa-list-alt mr-2",
+                  link: "/skill-set"
+                },
+                {
+                  key: "skill-set-structure-category",
+                  name: "skill_set_management",
+                  icon: "fas fa-cog mr-2",
+                  link: "/skill-set/category"
+                },
+
+                {
+                  key: "skill-set-compare",
+                  name: "compare_skill_set",
+                  icon: "fas fa-exchange-alt mr-2",
+                  link: "/skill-set/compare-skill-set"
+                }
+              ]
+            },
+            {
+              key: "business-skill-set",
+              name: "business_skill_set",
+              icon: "fas fa-layer-group mr-2",
+              link: "",
+              items: [
+                {
+                  key: "create-assessment-business-skill",
+                  name: "create_assessment_business_skill",
+                  icon: "fas fa-plus mr-2",
+                  link: "/business-skill-set/add"
+                },
+                {
+                  key: "list-assessment-business-skill",
+                  name: "list_assessment_business_skill",
+                  icon: "far fa-list-alt mr-2",
+                  link: "/business-skill-set"
+                },
+                {
+                  key: "business-skill-category",
+                  name: "business_skill_category",
+                  icon: "fas fa-cog mr-2",
+                  link: "/business-skill-set/category"
+                }
+              ]
+            },
+            {
+              key: "skill-set-sumarry-report-by-user",
+              name: "download_skill_set_by_user",
+              icon: "fas fa-download mr-2",
+              link: "",
+              items: [
+                {
+                  key: "skill-set_summary",
+                  name: "export_skill_set_summary",
+                  icon: "fas fa-download mr-2",
+                  link: "/skill-set/download-skill-set-summary"
+                },
+                {
+                  key: "skill-set-individual",
+                  name: "export_skill_set_individual",
+                  icon: "fas fa-download mr-2",
+                  link: "/skill-set/download-skill-set-by-user"
+                }
+              ]
             }
           ]
         },
@@ -266,23 +329,52 @@ export default {
           ]
         },
         {
-          key: "slack-integration",
-          name: "slack_integration",
-          icon: "fab fa-slack mr-2",
+          key: "intern-management",
+          name: "intern_management",
+          "a-icon": "contacts",
+          link: "/intern-management",
           items: [
             {
-              key: "send-worklog-report",
-              name: "send_worklog_report",
-              icon: "fas fa-paper-plane mr-2"
+              key: "view-time",
+              name: "view_time",
+              icon: "fas fa-calendar-week mr-2",
+              link: "/intern-management/view-time",
+              items: []
             },
             {
-              key: "config-issue-report",
-              name: "config_issue_report",
-              icon: "fas fa-cog mr-2",
-              link: "/config-issue-report"
+              key: "list-intern",
+              name: "list_intern",
+              icon: "fas fa-users mr-2",
+              link: "/intern-management/list-intern",
+              items: []
+            },
+            {
+              key: "list-salary",
+              name: "list_salary",
+              icon: "fas fa-file-invoice-dollar mr-2",
+              link: "/intern-management/list-salary",
+              items: []
             }
           ]
-        }
+        },
+        // {
+        //   key: "slack-integration",
+        //   name: "slack_integration",
+        //   icon: "fab fa-slack mr-2",
+        //   items: [
+        //     {
+        //       key: "send-worklog-report",
+        //       name: "send_worklog_report",
+        //       icon: "fas fa-paper-plane mr-2"
+        //     },
+        //     {
+        //       key: "config-issue-report",
+        //       name: "config_issue_report",
+        //       icon: "fas fa-cog mr-2",
+        //       link: "/config-issue-report"
+        //     }
+        //   ]
+        // }
       ],
       isDrawerVisible: false
     };
