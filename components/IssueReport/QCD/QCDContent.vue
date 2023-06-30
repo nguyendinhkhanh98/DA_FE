@@ -5,7 +5,7 @@
     </div>
 
     <section class="ant-row qcd-modal-block shadow">
-      <span class="text-bold title">"Q"uality</span>
+      <span class="text-bold title">Statistic</span>
       <a-tooltip placement="right" overlayClassName="qcd-report-description">
         <template slot="title">
           <a-table
@@ -19,7 +19,7 @@
         <a-icon type="question-circle" />
       </a-tooltip>
       <div class="ant-row qcd-modal-content">
-        <p class="description">Quality compliance rate: Ratio of bug</p>
+        <p class="description">Ratio of bug</p>
 
         <div class="ant-row qcd-modal-value pl-3 mt-3">
           <div class="ant-row">
@@ -119,7 +119,7 @@
       </div>
     </section>
 
-    <section class="ant-row qcd-modal-block shadow">
+    <!-- <section class="ant-row qcd-modal-block shadow">
       <span class="text-bold title" v-if="switchCostV2">"C"ost V2</span>
       <span class="text-bold title" v-else>"C"ost</span>
 
@@ -271,7 +271,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <QCDViewIssueInfo
       ref="qcd-view-bug-detail"

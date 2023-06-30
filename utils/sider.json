@@ -27,13 +27,6 @@
         "items": []
       },
       {
-        "key": "export-report-by-invoice",
-        "name": "export_report_by_invoice",
-        "icon": "fas fa-file-excel mr-2",
-        "link": "/export-report-by-invoice",
-        "items": []
-      },
-      {
         "key": "qcd-report",
         "name": "qcd_report",
         "icon": "fas fa-chart-line mr-2",
@@ -66,50 +59,6 @@
         "name": "jira_project_config",
         "icon": "fab fa-jira mr-2",
         "link": "/jira-project-config",
-        "items": []
-      }
-    ]
-  },
-  {
-    "key": "financial",
-    "name": "financial",
-    "icon": "fas fa-file-invoice-dollar mr-2",
-    "link": "",
-    "items": [
-      {
-        "key": "invoice-management",
-        "name": "list_active_invoices",
-        "icon": "fas fa-file-invoice-dollar mr-2",
-        "link": "/invoice-management",
-        "items": []
-      }
-    ]
-  },
-  {
-    "key": "documents",
-    "name": "documents",
-    "icon": "fas fa-book mr-2",
-    "link": "",
-    "items": [
-      {
-        "key": "search-document",
-        "name": "search_document",
-        "icon": "fas fa-search mr-2",
-        "link": "/document",
-        "items": []
-      },
-      {
-        "key": "knowledge_graph",
-        "name": "knowledge_graph",
-        "icon": "fas fa-project-diagram mr-2",
-        "link": "/document/knowledge-graph",
-        "items": []
-      },
-      {
-        "key": "upload-document",
-        "name": "create_document",
-        "icon": "fas fa-upload mr-2",
-        "link": "/document/upload",
         "items": []
       }
     ]
