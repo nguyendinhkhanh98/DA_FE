@@ -113,7 +113,7 @@
                 </a-col>
               </a-row>
 
-              <a-row>
+              <!-- <a-row>
                 <a-col v-bind="colHalfPart">
                   <a-form-item label="CV" :colon="false">
                     <a-row>
@@ -140,7 +140,7 @@
                     </a-row>
                   </a-form-item>
                 </a-col>
-              </a-row>
+              </a-row> -->
 
               <a-row class="mt-4">
                 <a-col class="text-center">

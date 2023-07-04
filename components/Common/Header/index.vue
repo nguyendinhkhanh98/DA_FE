@@ -19,7 +19,7 @@
 
       <a-dropdown class="mt-2 mr-2">
         <a-menu slot="overlay" @click="onChangeLanguage">
-          <a-menu-item key="ja"> <a-icon :component="Ja" />日本語 </a-menu-item>
+          <!-- <a-menu-item key="ja"> <a-icon :component="Ja" />日本語 </a-menu-item> -->
           <a-menu-item key="vi"> <a-icon :component="Vi" />Tiếng Việt </a-menu-item>
           <a-menu-item key="en"> <a-icon :component="En" />English </a-menu-item>
         </a-menu>

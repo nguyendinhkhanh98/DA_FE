@@ -322,7 +322,8 @@ export default {
           for (const key in value) {
             value[key] = value[key] || "";
           }
-          value.buy_date = value.buy_date.format("L") + " " + value.buy_date.format("LTS");
+          // value.buy_date = value.buy_date.format("L") + " " + value.buy_date.format("LTS");
+          value.buy_date = value.buy_date
         }
       });
 
