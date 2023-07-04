@@ -1,7 +1,7 @@
 <template>
   <a-card class="dashboard-chart shadow">
     <template slot="title">
-      <span class="h1">QCD KPI Result</span>
+      <span class="h1">Dashboard</span>
       <span class="icon-card-title" @click="edit = !edit"><i class="fas fa-ellipsis-h"></i></span>
     </template>
 
