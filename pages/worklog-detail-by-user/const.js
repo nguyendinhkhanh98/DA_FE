@@ -6,48 +6,61 @@ export const columns = [
     align: "center"
   },
   {
-    slots: { title: "logged_date" },
-    dataIndex: "started",
-    key: "started",
-    scopedSlots: { customRender: "dateRender" }
+    slots: { title: "Tên nhân viên" },
+    dataIndex: "fullName",
+    key: "fullName",
+    scopedSlots: { customRender: "fullName" }
   },
   {
-    slots: { title: "member" },
-    dataIndex: "member",
-    key: "member",
-    scopedSlots: { customRender: "memberRender" }
+    slots: { title: "Tổng số lượng công việc hoàn thành" },
+    dataIndex: "allTaskOntime",
+    key: "allTaskOntime",
+    scopedSlots: { customRender: "allTaskOntime" }
   },
   {
-    slots: { title: "total_spent_time" },
-    dataIndex: "totalSpentTimeSecs",
-    key: "totalSpentTimeSecs",
-    scopedSlots: { customRender: "spentTime" }
+    slots: { title: "Tổng số lượng công việc được giao" },
+    dataIndex: "allTask",
+    key: "allTask",
+    scopedSlots: { customRender: "allTask" }
+  },
+  {
+    slots: { title: "Điểm đánh giá" },
+    dataIndex: "pointEvaluate",
+    key: "pointEvaluate",
+    scopedSlots: { customRender: "pointEvaluate" }
   }
 ];
 
 export const userColumns = [
   {
-    slots: { title: "started_time" },
-    dataIndex: "started",
-    key: "started",
-    scopedSlots: { customRender: "dateRender" }
+    slots: { title: "STT" },
+    key: "no",
+    scopedSlots: { customRender: "no" },
+    align: "center"
   },
   {
-    slots: { title: "issue" },
-    dataIndex: "issueKey",
-    key: "issueKey",
-    scopedSlots: { customRender: "issueRender" }
+    slots: { title: "Dự án     " },
+    dataIndex: "projectName",
+    key: "projectName",
+    scopedSlots: { customRender: "projectName" }
   },
   {
-    slots: { title: "summary" },
-    dataIndex: "summary",
-    key: "summary"
+    slots: { title: "Lượng công việc hoàn thành đúng hạn" },
+    dataIndex: "countTaskOntime",
+    key: "countTaskOntime",
+    scopedSlots: { customRender: "countTaskOntime" }
   },
   {
-    slots: { title: "spent_time" },
-    dataIndex: "timeSpentSeconds",
-    key: "timeSpentSeconds",
-    scopedSlots: { customRender: "spentTime" }
+    slots: { title: "Lượng công việc được giao" },
+    dataIndex: "totalTask",
+    key: "totalTask",
+    scopedSlots: { customRender: "totalTask" }
+  },
+  {
+    slots: { title: "Vai trò trong dự án" },
+    dataIndex: "roleName",
+    key: "roleName",
+    scopedSlots: { customRender: "roleName" }
   }
 ];
 

@@ -46,6 +46,19 @@
           <a-button type="danger" icon="delete" :loading="updating" size="small" />
         </a-popconfirm>
       </template>
+      <template slot="fileReport" slot-scope="listFilesReport">
+        <div v-if="listFilesReport && listFilesReport.length">
+          <div v-for="(item, index) in listFilesReport" :key="index">
+            <span class="text-link pointer" @click="downloadFile(item)">
+              <a-icon type="link" class="mr-1" />{{ item }}</span
+            >
+          </div>
+        </div>
+        <div v-else></div>
+      </template>
+      <template slot="taskHistoryStatus" slot-scope="text, record">
+        <a-tag :color="mapColorTag(record.status)"> {{ record.status }} </a-tag>
+      </template>
     </a-table>
 
     <!-- Modal create -->
@@ -115,12 +128,50 @@
             <a-button> <a-icon type="upload" /> {{ $t("upload_file") }} </a-button>
           </a-upload>
         </a-form-item>
+        <a-form-item :label="$t('file_report')">
+          <div v-if="filePathReport.length">
+            <div v-for="(item, index) in filePathReport" :key="index">
+              <span class="text-link pointer" @click="downloadFile(item)">
+                <a-icon type="link" class="mr-1" />{{ item }}</span
+              >
+              <a-icon
+                class="ml-2"
+                type="delete"
+                :style="{ color: 'red', cursor: 'pointer' }"
+                @click="removeFileReport(item)"
+              />
+            </div>
+          </div>
+          <a-upload
+            v-else
+            name="file"
+            accept="image/*, .pdf, .doc, .txt, .pptx, .docx"
+            @change="handleUploadFileReport"
+            :customRequest="customRequest"
+            :multiple="true"
+          >
+            <a-button> <a-icon type="upload" /> {{ $t("upload_file") }} </a-button>
+          </a-upload>
+        </a-form-item>
+        <a-form-item :label="$t('task_history_status')">
+          <a-select
+            style="width: 120px"
+            @change="onSelectChange"
+            v-decorator="['status', { rules: [{ required: true, message: 'This field is required' }] }]"
+            :placeholder="$t('status')"
+          >
+            <a-select-option v-for="(item, index) in listStatusTask" :key="index" :value="item.value">
+              {{ item.label }}
+            </a-select-option>
+          </a-select>
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
 </template>
 <script>
 import { mapState, mapActions } from "vuex";
+import { mapColorTag } from "./const";
 export default {
   data() {
     return {
@@ -128,30 +179,14 @@ export default {
         {
           key: "no",
           slots: { title: "no_" },
-          scopedSlots: { customRender: "no" },
-          width: "50px"
+          scopedSlots: { customRender: "no" }
+          // width: "50px"
         },
         {
           dataIndex: "full_name",
           key: "name",
-          slots: { title: "full_name" },
-          width: "150px"
-        },
-        {
-          slots: { title: "start_date" },
-          defaultSortOrder: "descend",
-          sorter: (a, b) => a.start_date.localeCompare(b.start_date),
-          dataIndex: "start_date",
-          key: "start_date",
-          scopedSlots: { customRender: "startDate" },
-          width: "145px"
-        },
-        {
-          slots: { title: "end_date" },
-          dataIndex: "end_date",
-          key: "end_date",
-          scopedSlots: { customRender: "endDate" },
-          width: "145px"
+          slots: { title: "full_name" }
+          // width: "150px"
         },
         {
           slots: { title: "comment" },
@@ -161,17 +196,47 @@ export default {
           width: "250px"
         },
         {
+          slots: { title: "start_date" },
+          defaultSortOrder: "descend",
+          sorter: (a, b) => a.start_date.localeCompare(b.start_date),
+          dataIndex: "start_date",
+          key: "start_date",
+          scopedSlots: { customRender: "startDate" }
+          // width: "145px"
+        },
+        {
+          slots: { title: "end_date" },
+          dataIndex: "end_date",
+          key: "end_date",
+          scopedSlots: { customRender: "endDate" }
+          // width: "145px"
+        },
+        {
           slots: { title: "attachment" },
           dataIndex: "attachment",
           key: "attachment",
-          scopedSlots: { customRender: "attackCol" },
-          width: "200px"
+          scopedSlots: { customRender: "attackCol" }
+          // width: "200px"
+        },
+        {
+          slots: { title: "file_report" },
+          dataIndex: "fileReport",
+          key: "file_report",
+          scopedSlots: { customRender: "fileReport" }
+          // width: "200px"
+        },
+        {
+          slots: { title: "task_history_status" },
+          dataIndex: "task_history_status",
+          key: "task_history_status",
+          scopedSlots: { customRender: "taskHistoryStatus" }
+          // width: "200px"
         },
         {
           slots: { title: "action" },
           key: "action",
-          width: "55px",
           scopedSlots: { customRender: "actionCol" }
+          // width: "55px",
         }
       ],
       openModalAddOrUpdate: false,
@@ -179,8 +244,25 @@ export default {
       selectedItems: null,
       fileData: [],
       filePath: [],
+      filePathReport: [],
+      fileDataReport: [],
       currentId: null,
-      updating: false
+      updating: false,
+      mapColorTag,
+      listStatusTask: [
+        {
+          label: "new",
+          value: "new"
+        },
+        {
+          label: "working",
+          value: "working"
+        },
+        {
+          label: "done",
+          value: "done"
+        }
+      ]
     };
   },
   computed: {
@@ -225,15 +307,24 @@ export default {
             }),
             attachment: this.$form.createFormField({
               value: record.attachment
+            }),
+            status: this.$form.createFormField({
+              value: record.status
+            }),
+            file_report: this.$form.createFormField({
+              value: record.fileReport
             })
           };
         }
       });
       this.currentId = record.id;
       this.originFile = record.attachment;
+      this.originFileReport = record.fileReport;
       this.filePath = _.cloneDeep(record.attachment ? record.attachment : []);
+      this.filePathReport = _.cloneDeep(record.fileReport ? record.fileReport : []);
       this.openModalAddOrUpdate = true;
       this.fileData = [];
+      this.fileDataReport = [];
     },
     async onDelete(id) {
       this.updating = true;
@@ -245,12 +336,15 @@ export default {
       this.openModalAddOrUpdate = true;
       this.fileData = [];
       this.filePath = [];
+      this.filePathReport = [];
       this.form = this.$form.createForm(this, { name: "coordinated" });
     },
     handleOk() {
       this.form.validateFields(async (err, values) => {
         if (err) return;
         this.updating = true;
+
+        // file description
         let listFiles = [];
         this.fileData = _.uniq(this.fileData);
         if (this.fileData.length) {
@@ -262,6 +356,20 @@ export default {
             listFiles.push(response.data.data);
           }
         }
+
+        // file report
+        let listFilesReport = [];
+        this.fileDataReport = _.uniq(this.fileDataReport);
+        if (this.fileDataReport.length) {
+          for (let i = 0; i < this.fileDataReport.length; i++) {
+            const element = this.fileDataReport[i];
+            const formData = new FormData();
+            formData.append("file", element);
+            const response = await this.uploadFile(formData);
+            listFilesReport.push(response.data.data);
+          }
+        }
+
         let payload = {
           id: this.currentId,
           user_id: values.user_id,
@@ -269,15 +377,29 @@ export default {
           end_date: values.end_date ? this.$moment(values.end_date).format() : null,
           task_id: this.routeId,
           comment: values.comment,
-          attachment: this.filePath.length ? this.filePath : this.fileData.length ? listFiles : []
+          attachment: this.filePath.length ? this.filePath : this.fileData.length ? listFiles : [],
+          fileReport: this.filePathReport.length
+            ? this.filePathReport
+            : this.fileDataReport.length
+            ? listFilesReport
+            : [],
+          status: values.status
         };
         payload.attachment = JSON.stringify(payload.attachment);
+        payload.fileReport = JSON.stringify(payload.fileReport);
         try {
           await this.addOrUpdateHistory(payload);
           const deleteFiles = _.differenceWith(this.originFile, this.filePath, _.isEqual);
           if (deleteFiles.length) {
             for (let i = 0; i < deleteFiles.length; i++) {
               const element = deleteFiles[i];
+              await this.deleteFile(element);
+            }
+          }
+          const deleteFilesReport = _.differenceWith(this.originFileReport, this.filePathReport, _.isEqual);
+          if (deleteFilesReport.length) {
+            for (let i = 0; i < deleteFilesReport.length; i++) {
+              const element = deleteFilesReport[i];
               await this.deleteFile(element);
             }
           }
@@ -291,6 +413,8 @@ export default {
           this.currentId = null;
           this.fileData = [];
           this.filePath = [];
+          this.fileDataReport = [];
+          this.filePathReport = [];
           this.updating = false;
         } catch (error) {
           this.updating = false;
@@ -312,6 +436,14 @@ export default {
         }
       }
     },
+    handleUploadFileReport(data) {
+      if (data.fileList.length) {
+        for (let i = 0; i < data.fileList.length; i++) {
+          const element = data.fileList[i];
+          this.fileDataReport.push(element.originFileObj);
+        }
+      }
+    },
     async downloadFile(path) {
       const res = await this.getFile(path);
       if (res.data.error) {
@@ -323,6 +455,10 @@ export default {
     async removeFile(path) {
       const index = this.filePath.findIndex(item => item == path);
       this.filePath.splice(index, 1);
+    },
+    async removeFileReport(path) {
+      const index = this.filePathReport.findIndex(item => item == path);
+      this.filePathReport.splice(index, 1);
     },
     customRequest({ onSuccess, onError, file }) {
       setTimeout(() => {

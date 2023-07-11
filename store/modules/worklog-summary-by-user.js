@@ -1,4 +1,5 @@
 import moment from "moment";
+import _ from "lodash";
 
 export const state = () => ({
   allProject: [],
@@ -13,7 +14,9 @@ export const state = () => ({
       .subtract(1, "weeks")
       .endOf("isoWeek")
   },
-  gotoCurrentValue: 1
+  gotoCurrentValue: 1,
+  evaluateTaskData: [],
+  userTaskEvaluate: []
 });
 
 export const mutations = {
@@ -35,6 +38,37 @@ export const mutations = {
   },
   setCurrentValueTrigger(state, value) {
     state.gotoCurrentValue = value;
+  },
+  setEvaluateTaskData(state, value) {
+    state.evaluateTaskData = value;
+  },
+  setUserTaskEvaluate(state) {
+    state.userTaskEvaluate = state.evaluateTaskData.map((item, index) => {
+      const allTaskOntime = item?.filter(i => i?.status == 'done' && moment(i?.updated_at).isBefore(i?.end_date))?.length
+      const general = {
+        fullName: item?.[0].fullName || '-',
+        allTask: item?.length || 0,
+        pointEvaluate: 0,
+        allTaskOntime
+      }
+      const worklogs = state.evaluateTaskData?.[index]
+      let worklogsNew = Object.values(_.groupBy(worklogs, 'projectId'))
+      worklogsNew = worklogsNew.map((item) => {
+        const countTaskOntime = item?.filter(i => i?.status == 'done' && moment(i?.updated_at).isBefore(i?.end_date))?.length
+        const totalTask = item?.length || 0
+        return {
+          countTaskOntime,
+          totalTask,
+          projectName: item?.[0]?.projectName || '-',
+          roleName: item?.[0]?.roleName || '-'
+        }
+      })
+      console.log('worklogsNew', worklogsNew)
+      return {
+        ...general,
+        worklogs: worklogsNew
+      }
+    })
   }
 };
 
@@ -60,5 +94,16 @@ export const actions = {
   },
   async exportMonthlyReport({ commit }, payload) {
     return this.$request.post("/api/monthly-report", payload);
+  },
+  async getAllEvaluateTask({ commit, state }, payload) {
+    console.log('payload', payload)
+    let { data } = await this.$request.get(`/api/v2/evaluate-task?since=${payload?.since}&until=${payload?.until}`);
+    console.log('data', data)
+    if (!data.error) {
+      // commit("setEvaluateTaskData", data.data);
+      state.evaluateTaskData = data.data
+    }
+    console.log('state.evaluateTaskData', state.evaluateTaskData)
+    return data;
   }
 };

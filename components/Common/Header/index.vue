@@ -168,12 +168,6 @@ export default {
               link: "/management-task"
             },
             {
-              key: "employee-task-history",
-              name: "employee_task_history",
-              icon: "fas fa-history mr-2",
-              link: "/employee-task-history"
-            },
-            {
               key: "project-role-config",
               name: "role_config",
               icon: "fas fa-user-tag mr-2",
@@ -191,6 +185,12 @@ export default {
               name: "period_management",
               icon: "far fa-bookmark mr-2",
               link: "/skill-set/period"
+            },
+            {
+              key: "employee-task-history",
+              name: "employee_task_history",
+              icon: "fas fa-history mr-2",
+              link: "/employee-task-history"
             },
             {
               key: "engineer-skill",
@@ -356,7 +356,7 @@ export default {
               items: []
             }
           ]
-        },
+        }
         // {
         //   key: "slack-integration",
         //   name: "slack_integration",
