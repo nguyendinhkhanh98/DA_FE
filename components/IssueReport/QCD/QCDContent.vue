@@ -69,7 +69,7 @@
           </div>
         </div>
 
-        <div class="ant-row qcd-modal-value pl-3 mt-3">
+        <!-- <div class="ant-row qcd-modal-value pl-3 mt-3">
           <div class="ant-row">
             <span class="ant-col-7 color-violet">Degradation Ratio By Number</span>
             <span class="ant-col-6 color-violet" :style="textEnd">Number of degradation &nbsp;</span>
@@ -94,7 +94,7 @@
               </a-tooltip>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="ant-row qcd-modal-value pl-3">
           <div class="ant-row">
