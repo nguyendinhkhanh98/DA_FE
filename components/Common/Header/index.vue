@@ -223,10 +223,10 @@ export default {
               link: "/skill-set/period"
             },
             {
-              key: "employee-task-history",
-              name: "employee_task_history",
+              key: "evaluate-work",
+              name: "evaluate-work",
               icon: "fas fa-history mr-2",
-              link: "/employee-task-history"
+              link: "/evaluate-work"
             },
             {
               key: "engineer-skill",
