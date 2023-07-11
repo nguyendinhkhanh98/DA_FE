@@ -150,6 +150,42 @@ export default {
           items: []
         },
         {
+          key: "user-employee_management",
+          name: "employee_management",
+          "a-icon": "team",
+          link: "/employee-management",
+          items: []
+        },
+        {
+          key: "intern-management",
+          name: "intern_management",
+          "a-icon": "contacts",
+          link: "/intern-management",
+          items: [
+            {
+              key: "view-time",
+              name: "view_time",
+              icon: "fas fa-calendar-week mr-2",
+              link: "/intern-management/view-time",
+              items: []
+            },
+            {
+              key: "list-intern",
+              name: "list_intern",
+              icon: "fas fa-users mr-2",
+              link: "/intern-management/list-intern",
+              items: []
+            },
+            {
+              key: "list-salary",
+              name: "list_salary",
+              icon: "fas fa-file-invoice-dollar mr-2",
+              link: "/intern-management/list-salary",
+              items: []
+            }
+          ]
+        },
+        {
           key: "management-task",
           name: "management_task",
           icon: "fas fa-tasks mr-2",
@@ -325,35 +361,6 @@ export default {
               name: "human_resource_by_project",
               icon: "fas fa-chart-line mr-2",
               link: "/hr-management/hr-by-project"
-            }
-          ]
-        },
-        {
-          key: "intern-management",
-          name: "intern_management",
-          "a-icon": "contacts",
-          link: "/intern-management",
-          items: [
-            {
-              key: "view-time",
-              name: "view_time",
-              icon: "fas fa-calendar-week mr-2",
-              link: "/intern-management/view-time",
-              items: []
-            },
-            {
-              key: "list-intern",
-              name: "list_intern",
-              icon: "fas fa-users mr-2",
-              link: "/intern-management/list-intern",
-              items: []
-            },
-            {
-              key: "list-salary",
-              name: "list_salary",
-              icon: "fas fa-file-invoice-dollar mr-2",
-              link: "/intern-management/list-salary",
-              items: []
             }
           ]
         }

@@ -6,13 +6,13 @@ export const columns = [
     width: "50px"
   },
   {
-    slots: { title: "user_name" },
-    dataIndex: "username",
-    key: "user_name",
-    // scopedSlots: {
-    //   filterDropdown: "filterDropdown",
-    //   filterIcon: "filterIcon"
-    // }
+    slots: { title: "full_name" },
+    dataIndex: "fullName",
+    key: "full_name",
+    scopedSlots: {
+      filterDropdown: "filterDropdown",
+      filterIcon: "filterIcon"
+    }
   },
   {
     slots: { title: "email" },
@@ -30,12 +30,12 @@ export const columns = [
     dataIndex: "jira_email",
     key: "jira_email"
   },
-  // {
-  //   slots: { title: "project" },
-  //   dataIndex: "project",
-  //   scopedSlots: { customRender: "project", filterDropdown: "filterDropdown", filterIcon: "filterIcon" },
-  //   key: "project"
-  // },
+  {
+    slots: { title: "project" },
+    dataIndex: "project",
+    scopedSlots: { customRender: "project", filterDropdown: "filterDropdown", filterIcon: "filterIcon" },
+    key: "project"
+  },
   {
     slots: { title: "" },
     key: "detail",

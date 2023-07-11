@@ -325,6 +325,7 @@ export default {
     async getUserByIdAPI() {
       const data = await this.getUserById(this.userId);
       this.formSubmit = data.data;
+      console.log("this.formSubmit", this.formSubmit);
       this.formSubmit.role = data.data?.role.map(item => item.role_id);
       this.formSubmit.project = data.data?.project.map(item => item.project_id);
       if (this.formSubmit.cv) {
@@ -353,12 +354,12 @@ export default {
       }
       if (errorMessage) return this.$notification.error(errorMessage);
 
-      this.formSubmit.cv = infor.fileList.length? infor.fileList[0].originFileObj : "";
+      this.formSubmit.cv = infor.fileList.length ? infor.fileList[0].originFileObj : "";
       let fileList = [...infor.fileList];
       fileList = fileList.slice(-1);
       this.fileList = fileList;
 
-      if(this.formSubmit.cv != "") this.base64DataCV = await this.toBase64(this.formSubmit.cv);
+      if (this.formSubmit.cv != "") this.base64DataCV = await this.toBase64(this.formSubmit.cv);
     },
     filterOptionRole(input, option) {
       let textOption = option.componentOptions.children[0].text.toLowerCase();
@@ -369,10 +370,10 @@ export default {
       return new Promise((resolve, reject) => {
         let reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = function() {
+        reader.onload = function () {
           return resolve(reader.result);
         };
-        reader.onerror = function(error) {
+        reader.onerror = function (error) {
           return reject(error);
         };
       });

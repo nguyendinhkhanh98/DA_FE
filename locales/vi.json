@@ -66,7 +66,7 @@
   "export_by_month": "",
   "export_all": "",
   "view_type": "Chế độ xem",
-  "user_management": "Quản lý nhân viên",
+  "user_management": "Quản lý tài khoản",
   "reports": "Báo cáo",
   "issue_report": "",
   "user_summary": "",
@@ -499,5 +499,6 @@
   "count_task": "Số lượng công việc",
   "last_month": "Tháng trước",
   "task_history_status": "Trạng thái",
-  "file_report": "File báo cáo"
+  "file_report": "File báo cáo",
+  "user_name": "Tên đăng nhập"
 }

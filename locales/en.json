@@ -499,5 +499,6 @@
   "count_task": "Count task",
   "last_month": "Last month",
   "task_history_status": "Status",
-  "file_report": "File report"
+  "file_report": "File report",
+  "user_name": "Username"
 }
