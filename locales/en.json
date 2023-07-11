@@ -444,7 +444,7 @@
   "add_role": "Add role",
   "add": "Add",
   "category": "Category",
-  "employee_task_history": "Employee task history",
+  "employee_task_history": "Evaluate task",
   "list_task": "List Project",
   "invoice_infomation": "Invoice infomation",
   "export_skill_set_individual": "Skill Evaluation Individual",
@@ -453,8 +453,8 @@
   "lastest_invoice_cost": "Lastest Invoice Cost",
   "task_history": "List Task",
   "add_history": "Add task",
-  "comment": "Comment",
-  "attachment": "Attachment",
+  "comment": "Content",
+  "attachment": "File description",
   "update_history": "Update history",
   "documents": "Documents",
   "search_document": "Search document",
@@ -494,5 +494,10 @@
   "role_project": "Role",
   "project_name": "Project Name",
   "actual_work_day": "Actual work day",
-  "rate_join": "Rate join in project"
+  "rate_join": "Rate join in project",
+  "project_join": "All project",
+  "count_task": "Count task",
+  "last_month": "Last month",
+  "task_history_status": "Status",
+  "file_report": "File report"
 }

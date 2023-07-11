@@ -444,7 +444,7 @@
   "add_role": "Thêm mới quyền",
   "add": "Thêm mới",
   "category": "Thể loại",
-  "employee_task_history": "Employee task history",
+  "employee_task_history": "Đánh giá công việc",
   "list_task": "List dự án",
   "invoice_infomation": "Invoice infomation",
   "export_skill_set_individual": "Skill Evaluation Individual",
@@ -453,8 +453,8 @@
   "lastest_invoice_cost": "Lastest Invoice Cost",
   "task_history": "Danh sách công việc",
   "add_history": "Thêm công việc",
-  "comment": "Comment",
-  "attachment": "Attachment",
+  "comment": "Nội dung",
+  "attachment": "File mô tả",
   "update_history": "Update history",
   "documents": "Documents",
   "search_document": "Search document",
@@ -494,5 +494,10 @@
   "role_project": "Vai trò",
   "project_name": "Tên dự án",
   "actual_work_day": "Số ngày làm thực",
-  "rate_join": "Tỉ lệ tham gia vào dự án"
+  "rate_join": "Tỉ lệ tham gia vào dự án",
+  "project_join": "Dự án tham gia",
+  "count_task": "Số lượng công việc",
+  "last_month": "Tháng trước",
+  "task_history_status": "Trạng thái",
+  "file_report": "File báo cáo"
 }

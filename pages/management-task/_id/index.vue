@@ -42,11 +42,9 @@
                     v-decorator="['jira_url', { rules: [{ required: true }], initialValue: taskInfo.jira_url }]"
                     :placeholder="$t('url')"
                   >
-                    <template v-for="project in listJiraProject">
-                      <a-select-option :key="project.id" :value="project.url">
-                        {{ project.url }}
-                      </a-select-option>
-                    </template>
+                    <a-select-option v-for="project in listJiraProject" :key="project.id" :value="project.url">
+                      {{ project.url }}
+                    </a-select-option>
                   </a-select>
                   <a-tag v-if="routeId != 'add'" class="ant-tag-large ml-3" :color="taskInfo.jira_id ? 'blue' : 'red'"
                     >{{ taskInfo.jira_id ? "Linked" : "Unlinked"
@@ -92,11 +90,9 @@
                     :placeholder="$t('status')"
                     :filterOption="filterOptionForManager"
                   >
-                    <template v-for="status in listStatus">
-                      <a-select-option :key="status.id">
-                        {{ status.name }}
-                      </a-select-option>
-                    </template>
+                    <a-select-option v-for="status in listStatus" :key="status.id">
+                      {{ status.name }}
+                    </a-select-option>
                   </a-select>
                 </a-form-item>
 
@@ -159,13 +155,13 @@
             name: taskInfo.name,
             jiraId: this.taskInfo.jira_id,
             key: this.taskInfo.key,
-            jiraUrl: this.taskInfo.jira_url,
+            jiraUrl: this.taskInfo.jira_url
           }"
         />
       </a-card>
-      <a-card class="shadow mt-3">
+      <!-- <a-card class="shadow mt-3">
         <CostSetting :projectId="routeId" />
-      </a-card>
+      </a-card> -->
     </div>
   </div>
 </template>
@@ -211,7 +207,7 @@ export default {
       routeId: null,
       taskInfo: {},
       loading: true,
-      updating: false,
+      updating: false
     };
   },
   computed: {
@@ -219,7 +215,7 @@ export default {
       listSkill: state => state.modules["management-task"].listSkill,
       listBusinessSkill: state => state.modules["business-skill"].listSkill,
       listStatus: state => state.modules["management-task"].listStatus,
-      listJiraProject: state => state.modules["jira-project"].listJiraProject,
+      listJiraProject: state => state.modules["jira-project"].listJiraProject
     }),
     filterSkill() {
       return this.taskInfo && this.taskInfo.skills;
@@ -265,7 +261,7 @@ export default {
       GetLevels: "modules/skill-set/GetLevels",
       fetchListBusinessLevel: "modules/management-task/fetchListBusinessLevel",
       syncTaskWithJiraProject: "modules/management-task/syncTaskWithJiraProject",
-      getUsersAssignableInProject: "modules/summary-report-by-issue/getUsersAssignableInProject",
+      getUsersAssignableInProject: "modules/summary-report-by-issue/getUsersAssignableInProject"
     }),
     async handleSubmit() {
       const formData = await this.validateForm();
@@ -335,7 +331,7 @@ export default {
       await this.fetchListStatus();
       let r = await this.getTaskByID(this.routeId);
       this.taskInfo = r.data;
-      await this.getUsersAssignableInProject({ jiraUrl: this.taskInfo.jira_url, project_key: this.taskInfo.key})
+      await this.getUsersAssignableInProject({ jiraUrl: this.taskInfo.jira_url, project_key: this.taskInfo.key });
     },
     async fetchAndExtractSkill() {
       let response = await this.fetchListBusinessSkill();

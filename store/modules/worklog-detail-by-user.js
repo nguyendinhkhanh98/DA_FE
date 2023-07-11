@@ -73,7 +73,7 @@ export const mutations = {
       })
     })
     console.log("summaryWorklogsInMonth", state.summaryWorklogsInMonth);
-  },
+  }
 };
 
 export const actions = {

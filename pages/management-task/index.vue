@@ -22,14 +22,14 @@
     >
       <div slot="no" slot-scope="text, record, index">{{ index + 1 }}</div>
 
-      <template v-for="column of columns" :slot="column.slots.title">
+      <template v-for="(column, index) of columns" :slot="column.slots.title">
         <div :key="column.key" v-if="column.key == 'name'">
           <span>{{ $t(column.slots.title) }}</span>
           <br />
           <a-input v-model="dataFilter.name" allowClear />
         </div>
 
-        <div :key="column.key" v-else-if="column.key == 'business_skills'">
+        <div :key="index" v-else-if="column.key == 'business_skills'">
           <span>{{ $t(column.slots.title) }}</span>
           <br />
           <a-select
@@ -47,7 +47,7 @@
           </a-select>
         </div>
 
-        <div :key="column.key" v-else-if="column.key == 'skills'">
+        <div :key="`${index}`" v-else-if="column.key == 'skills'">
           <span>{{ $t(column.slots.title) }}</span>
           <br />
           <a-select
@@ -65,7 +65,7 @@
           </a-select>
         </div>
 
-        <div :key="column.key" v-else-if="column.key == 'status'">
+        <div :key="`1${index}`" v-else-if="column.key == 'status'">
           <span>{{ $t(column.slots.title) }}</span>
           <br />
           <a-select
@@ -81,7 +81,7 @@
           </a-select>
         </div>
 
-        <div :key="column.key" v-else>
+        <div :key="`2${index}`" v-else>
           <span>{{ $t(column.slots.title) }}</span>
         </div>
       </template>

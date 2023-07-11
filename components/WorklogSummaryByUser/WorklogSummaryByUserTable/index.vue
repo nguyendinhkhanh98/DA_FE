@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-table
+    <!-- <a-table
       bordered
       :columns="tableColumns"
       :dataSource="dataSource"
@@ -41,7 +41,7 @@
           </div>
         </a-row>
       </template>
-    </a-table>
+    </a-table> -->
   </div>
 </template>
 
