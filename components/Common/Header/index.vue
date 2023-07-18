@@ -140,7 +140,7 @@ export default {
       Ja,
       headers,
       siders,
-      lang: "en",
+      lang: "vi",
       companyNav: [
         {
           key: "user-management",
@@ -223,8 +223,8 @@ export default {
               link: "/skill-set/period"
             },
             {
-              key: "evaluate-work",
-              name: "evaluate-work",
+              key: "evaluate_work",
+              name: "evaluate_work",
               icon: "fas fa-history mr-2",
               link: "/evaluate-work"
             },

@@ -64,7 +64,13 @@
                 mode="create"
                 v-if="isCreateProjectCost"
                 :index="0"
-                :record="{ id: 'add', project: projectData.name, project_id: projectData.id, jiraUrl: projectData.jiraUrl, project_key: projectData.key }"
+                :record="{
+                  id: 'add',
+                  project: projectData.name,
+                  project_id: projectData.id,
+                  jiraUrl: projectData.jiraUrl,
+                  project_key: projectData.key
+                }"
                 :columns="columns"
                 @create="handleCreatedProject"
                 @cancel="isCreateProjectCost = false"
@@ -113,20 +119,20 @@ const columns = [
     key: "user",
     scopedSlots: { customRender: "user" }
   },
-  {
-    slots: { title: "jira_email" },
-    dataIndex: "jiraEmail",
-    key: "jiraEmail",
-    scopedSlots: { customRender: "jira_email" },
-    width: 506
-  },
-  {
-    slots: { title: "isJiraEmail" },
-    dataIndex: "isJiraEmail",
-    key: "isJiraEmail",
-    scopedSlots: { customRender: "is_jira_email" },
-    width: "12%"
-  },
+  // {
+  //   slots: { title: "jira_email" },
+  //   dataIndex: "jiraEmail",
+  //   key: "jiraEmail",
+  //   scopedSlots: { customRender: "jira_email" },
+  //   width: 506
+  // },
+  // {
+  //   slots: { title: "isJiraEmail" },
+  //   dataIndex: "isJiraEmail",
+  //   key: "isJiraEmail",
+  //   scopedSlots: { customRender: "is_jira_email" },
+  //   width: "12%"
+  // },
   {
     slots: { title: "role" },
     dataIndex: "role_project_id",
@@ -161,7 +167,7 @@ export default {
       listUserProjectRole: [],
       listStatus: [],
       columns,
-      isCreateProjectCost: false,
+      isCreateProjectCost: false
     };
   },
   async created() {
@@ -179,9 +185,9 @@ export default {
           jiraUrl: this.projectData.jiraUrl
         });
       }
-    }, 
+    },
     async listUserProjectRole() {
-     await this.getAllUserProject()
+      await this.getAllUserProject();
     }
   },
   methods: {
@@ -195,7 +201,7 @@ export default {
       getListUserOnlyName: "modules/user-management/getListUserOnlyName",
       getAllUsersAssignableToProjects: "modules/summary-report-by-issue/getAllUsersAssignableToProjects",
       getUsersAssignableInProject: "modules/summary-report-by-issue/getUsersAssignableInProject",
-      getAllUserProject: "modules/user-management/getAllUserProject",
+      getAllUserProject: "modules/user-management/getAllUserProject"
     }),
     getStyleHeaderTable(column) {
       if (!column.width) return {};
@@ -208,10 +214,10 @@ export default {
       this.$refs["member-item"].loading = true;
       this.isCreateProjectCost = false;
       let { jiraUrl, project_key, jira_email } = e;
-      let assigneeList = await this.getUsersAssignableInProject({jiraUrl, project_key});
+      let assigneeList = await this.getUsersAssignableInProject({ jiraUrl, project_key });
       assigneeList = assigneeList.data;
       let emailAssigneeList = assigneeList.map(item => item.emailAddress).filter(item => item !== "");
-      jira_email = emailAssigneeList.includes(jira_email) ? jira_email : null
+      jira_email = emailAssigneeList.includes(jira_email) ? jira_email : null;
       let payload = { ...e, jira_email };
       let response = await this.createUserJiraProject(payload);
       if (!response.error) {
@@ -226,10 +232,13 @@ export default {
     async handleUpdateData(e, i) {
       this.$refs[`member-item-${i}`][0].loading = true;
       let { jira_email } = e;
-      let assigneeList = await this.getUsersAssignableInProject({ project_key: this.projectData.key, jiraUrl: this.projectData.jiraUrl });
+      let assigneeList = await this.getUsersAssignableInProject({
+        project_key: this.projectData.key,
+        jiraUrl: this.projectData.jiraUrl
+      });
       assigneeList = assigneeList.data;
       let emailAssigneeList = assigneeList.map(item => item.emailAddress).filter(item => item !== "");
-      jira_email = emailAssigneeList.includes(jira_email) ? jira_email : null
+      jira_email = emailAssigneeList.includes(jira_email) ? jira_email : null;
       let payload = { ...e, jira_email };
       let response = await this.updateUserRoleProject(payload);
       this.$refs[`member-item-${i}`][0].loading = false;

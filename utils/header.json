@@ -8,6 +8,13 @@
     "hideDownIcon": false,
     "items": [
       {
+        "key": "notification",
+        "name": "notification",
+        "icon": "fas fa-bell mr-1",
+        "link": "/notification",
+        "subItems": []
+      },
+      {
         "key": "edit-profile",
         "name": "edit_profile",
         "icon": "fas fa-edit mr-1",

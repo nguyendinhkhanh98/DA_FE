@@ -500,5 +500,8 @@
   "last_month": "Tháng trước",
   "task_history_status": "Trạng thái",
   "file_report": "File báo cáo",
-  "user_name": "Tên đăng nhập"
+  "user_name": "Tên đăng nhập",
+  "evaluate_work": "Đánh giá công việc",
+  "evaluate_score": "Đánh giá chất lượng",
+  "notification": "Thông báo"
 }

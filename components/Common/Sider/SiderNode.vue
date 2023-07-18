@@ -34,7 +34,7 @@
 
 <script>
 import author from "@/utils/author";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "SiderNode",
@@ -49,13 +49,22 @@ export default {
       optionsPanel: null
     };
   },
+  computed: {
+    ...mapGetters({
+      roleUser: "role"
+    })
+  },
   methods: {
     ...mapActions({
       sendWorklogTableToSlack: "modules/slack-integration/sendWorklogTableToSlack"
     }),
     isRender(screenKey) {
+      if ((screenKey == "project-role-config" || screenKey == "create-task") && !this.roleUser.includes("admin"))
+        return false;
+
       if (!author[screenKey]) return true;
       let permissions = author[screenKey]["view-access"];
+
       // find with array permission or user
       for (const key in permissions) {
         if (permissions[key] == 1 && this.role.indexOf(key) >= 0) return true;

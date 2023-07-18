@@ -6,14 +6,14 @@
           <table class="w-100 table-bordered">
             <thead class="ant-table-thead">
               <tr>
-                <th style="width: 50px;"></th>
+                <th style="width: 50px"></th>
                 <th class="wrapper-header" v-for="column in columns" :key="column.key" :span="column.span">
                   {{ $t(column.title) }}
                 </th>
               </tr>
             </thead>
             <tbody class="ant-table-tbody">
-              <template v-for="data in dataSource">
+              <div v-for="data in dataSource">
                 <tr :key="`${data.id}`" :id="`${data.id}`">
                   <td class="ant-table-row-expand-icon-cell">
                     <div
@@ -36,7 +36,7 @@
                     <GroupCategory ref="group-category" v-bind="{ record: data }" @change-skill="handleFormChange" />
                   </td>
                 </tr>
-              </template>
+              </div>
             </tbody>
           </table>
         </div>

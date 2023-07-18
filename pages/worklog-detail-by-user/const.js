@@ -12,13 +12,13 @@ export const columns = [
     scopedSlots: { customRender: "fullName" }
   },
   {
-    slots: { title: "Tổng số lượng công việc hoàn thành" },
+    slots: { title: "Số công việc hoàn thành đúng hạn" },
     dataIndex: "allTaskOntime",
     key: "allTaskOntime",
     scopedSlots: { customRender: "allTaskOntime" }
   },
   {
-    slots: { title: "Tổng số lượng công việc được giao" },
+    slots: { title: "Số công việc được giao" },
     dataIndex: "allTask",
     key: "allTask",
     scopedSlots: { customRender: "allTask" }
@@ -28,6 +28,12 @@ export const columns = [
     dataIndex: "pointEvaluate",
     key: "pointEvaluate",
     scopedSlots: { customRender: "pointEvaluate" }
+  },
+  {
+    slots: { title: "Xếp hạng" },
+    dataIndex: "rankEvaluate",
+    key: "rankEvaluate",
+    scopedSlots: { customRender: "rankEvaluate" }
   }
 ];
 
@@ -39,22 +45,28 @@ export const userColumns = [
     align: "center"
   },
   {
-    slots: { title: "Dự án     " },
+    slots: { title: "Dự án" },
     dataIndex: "projectName",
     key: "projectName",
     scopedSlots: { customRender: "projectName" }
   },
   {
-    slots: { title: "Lượng công việc hoàn thành đúng hạn" },
+    slots: { title: "Số công việc hoàn thành đúng hạn" },
     dataIndex: "countTaskOntime",
     key: "countTaskOntime",
     scopedSlots: { customRender: "countTaskOntime" }
   },
   {
-    slots: { title: "Lượng công việc được giao" },
+    slots: { title: "Số công việc được giao" },
     dataIndex: "totalTask",
     key: "totalTask",
     scopedSlots: { customRender: "totalTask" }
+  },
+  {
+    slots: { title: "Đánh giá chất lượng" },
+    dataIndex: "qualityScore",
+    key: "qualityScore",
+    scopedSlots: { customRender: "qualityScore" }
   },
   {
     slots: { title: "Vai trò trong dự án" },
@@ -146,3 +158,18 @@ export const excelColumnsByTask = [
     width: 11
   }
 ];
+
+export const mapColorScoreEvaluateTag = function(text) {
+  switch (text) {
+    case "notEvaluate":
+      return "#C3C3C3";
+    case "bad":
+      return "#cd201f";
+    case "averate":
+      return "#ffc107";
+    case "good":
+      return "#4dbd74";
+    case "excellent":
+      return "#3b5999"
+  }
+};

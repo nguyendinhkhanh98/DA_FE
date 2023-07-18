@@ -1,32 +1,20 @@
 <template>
   <a-card>
-    <h1>{{ $t("human_resource_by_project") }}</h1>
+    <h1>{{ $t("notification") }}</h1>
     <a-row>
       <a-col v-bind="wrapperContainerCol">
-        <a-form v-bind="formItemLayout" @submit.prevent="getWorklogsByProject">
+        <a-form v-bind="formItemLayout" @submit.prevent="getNotifications">
           <!-- Select-month -->
-          <a-form-item :label="$t('project')" :colon="false">
+          <!-- <a-form-item :label="$t('project')" :colon="false">
             <a-month-picker placeholder="Select month" @change="onChange" v-model="selectedMonth">
               <a-icon slot="suffixIcon" type="smile" />
             </a-month-picker>
-          </a-form-item>
-          <!-- Select project -->
-          <a-form-item :label="$t('project')" :colon="false">
-            <a-select mode="multiple" v-model="selectedProjects" @change="hiddenTable">
-              <a-select-option
-                v-for="project of aggregateProjectListFromAllURLs"
-                :key="project.key"
-                :value="project.key"
-              >
-                <img
-                  :src="project.avatarUrls['16x16']"
-                  height="16"
-                  width="16"
-                  border="0"
-                  align="absmiddle"
-                  :alt="project.name"
-                />
-                {{ project.name }}
+          </a-form-item> -->
+          <!-- Select status -->
+          <a-form-item :label="$t('notification')" :colon="false">
+            <a-select v-model="selectedStatusNotification">
+              <a-select-option v-for="item of notificationStatus" :key="item.value" :value="item.value">
+                {{ item.label }}
               </a-select-option>
             </a-select>
           </a-form-item>
@@ -36,50 +24,56 @@
               <i class="fas fa-search mr-1"></i>
               {{ $t("search") }}
             </a-button>
-            <a-button type="primary" class="ml-1" ghost @click="handleExportReport" :loading="loading">
+            <!-- <a-button type="primary" class="ml-1" ghost @click="handleExportReport" :loading="loading">
               <i class="fas fa-search mr-1"></i>
               {{ $t("export_excel") }}
-            </a-button>
+            </a-button> -->
           </a-form-item>
         </a-form>
       </a-col>
     </a-row>
 
-    <a-row type="flex" align="bottom" justify="space-between" v-if="uniqueInstances.length && isShowTable">
-      <span class="text-bold">{{ $t("total_result") }}: {{ uniqueInstances.length }}</span>
+    <a-row type="flex" align="bottom" justify="space-between">
+      <span class="text-bold">{{ $t("total_result") }}: {{ listNotifications.length }}</span>
       <span style="float: right">
-        <a-button class="mb-1" type="primary" ghost @click="handleExportByDate">
-          <i class="fas fa-file-excel mr-1 ml-1" style="color: green"></i>
-          {{ $t("export_detail_by_date") }}
+        <a-button
+          v-if="isDisplayButton && selectedStatusNotification == 'unread'"
+          class="mb-1"
+          type="primary"
+          ghost
+          @click="handleReadNotification"
+        >
+          <i class="fas fa-check mr-1 ml-1" style="color: green"></i>
+          {{ "Đánh dấu tất cả đã đọc" }}
         </a-button>
-        <a-button class="mb-1" type="primary" ghost @click="handleExportByTask">
+        <!-- <a-button class="mb-1" type="primary" ghost @click="handleExportByTask">
           <i class="fas fa-file-excel mr-1 ml-1" style="color: green"></i>
           {{ $t("export_detail_by_task") }}
-        </a-button>
+        </a-button> -->
       </span>
     </a-row>
 
     <a-table
       bordered
       :columns="columns"
-      v-if="summaryWorklogsInMonth.length && isShowTable"
-      :dataSource="summaryWorklogsInMonth"
+      v-if="isShowTable"
+      :dataSource="listNotifications"
       :rowKey="(record, index) => (pagination.current - 1) * pagination.pageSize + index + 1"
       :loading="loading"
       :pagination="pagination"
       @change="handleTableChange"
     >
       <template v-for="column of columns" :slot="column.slots.title">{{ $t(column.slots.title) }}</template>
-      <template slot="no" slot-scope="text, record, index">
+      <!-- <template slot="no" slot-scope="text, record, index">
         {{ (pagination.current - 1) * pagination.pageSize + index + 1 }}
+      </template> -->
+      <template slot="ID" slot-scope="text, record">
+        {{ record.id }}
       </template>
-      <template slot="actualWorkDay" slot-scope="text, record">
-        {{ record.actualWorkDay }}
+      <template slot="notification" slot-scope="text, record">
+        {{ record.content }}
       </template>
-      <template slot="rateJoin" slot-scope="text, record">
-        {{ record.rateJoin }}
-      </template>
-      <template slot="expandedRowRender" slot-scope="text">
+      <!-- <template slot="expandedRowRender" slot-scope="text">
         <a-table
           class="mt-1 mb-1"
           :columns="userColumns"
@@ -109,7 +103,7 @@
             {{ text }}
           </template>
         </a-table>
-      </template>
+      </template> -->
     </a-table>
   </a-card>
 </template>
@@ -140,11 +134,28 @@ export default {
         pageSizeOptions: ["15", "35", "50"]
       },
       loading: false,
-      isShowTable: false,
+      isShowTable: true,
       dateString: "",
       selectedMonth: null,
       start: null,
-      end: null
+      end: null,
+      notificationStatus: [
+        {
+          label: "Tất cả",
+          value: "all"
+        },
+        {
+          label: "Chưa đọc",
+          value: "unread"
+        },
+        {
+          label: "Đã đọc",
+          value: "readed"
+        }
+      ],
+      selectedStatusNotification: "all",
+      listNotifications: [],
+      isDisplayButton: false
     };
   },
   computed: {
@@ -155,11 +166,15 @@ export default {
       summaryWorklogsInMonth: state => state.modules["worklog-detail-by-user"].summaryWorklogsInMonth
     })
   },
-  async mounted() {
-    if (this.jiraUrl) {
-      await this.getAggregateProjectListFromAllURLs();
-    }
+  async created() {
+    const { data } = await this.$request.get("/api/v2/notification");
+    this.listNotifications = data?.data || [];
   },
+  // async mounted() {
+  //   if (this.jiraUrl) {
+  //     await this.getAggregateProjectListFromAllURLs();
+  //   }
+  // },
   methods: {
     ...mapMutations({
       setAssigneeList: "modules/summary-report-by-issue/setAssigneeList",
@@ -183,7 +198,6 @@ export default {
         this.loading = false;
         return;
       }
-      console.log("this.aggregateProjectListFromAllUrls", this.aggregateProjectListFromAllURLs);
       var arr = this.dateString.split("-");
       this.start = `${this.dateString}-21`;
       this.end = parseInt(arr[1]) + 1 > 12 ? `${parseInt(arr[0]) + 1}-01-20` : `${arr[0]}-0${parseInt(arr[1]) + 1}-20`;
@@ -228,6 +242,13 @@ export default {
       this.isShowTable = true;
       this.loading = false;
     },
+    async getNotifications() {
+      this.loading = true;
+      const { data } = await this.$request.get(`/api/v2/notification?status=${this.selectedStatusNotification}`);
+      this.listNotifications = data?.data || [];
+      this.loading = false;
+      this.isDisplayButton = true;
+    },
     validateInputs() {
       if (!this.selectedMonth) return -1;
     },
@@ -238,9 +259,7 @@ export default {
       this.isShowTable = false;
     },
     onChange(date, dateString) {
-      console.log(date, dateString);
       this.dateString = dateString;
-      console.log("selectedMonth", this.selectedMonth);
     },
     workdayCount(start, end) {
       var first = start.clone().endOf("week"); // end of first week
@@ -257,6 +276,11 @@ export default {
       let duration = [];
       duration[0] = moment(this.start).add(1, "days");
       duration[1] = moment(this.end).add(1, "days");
+    },
+    async handleReadNotification() {
+      await this.$request.put(`/api/v2/notification`);
+      const { data } = this.$request.get(`/api/v2/notification?status=${this.selectedStatusNotification}`);
+      this.listNotifications = data?.data || [];
     }
   }
 };

@@ -500,5 +500,8 @@
   "last_month": "Last month",
   "task_history_status": "Status",
   "file_report": "File report",
-  "user_name": "Username"
+  "user_name": "Username",
+  "evaluate_work": "Evaluate work",
+  "evaluate_score": "Evaluate score",
+  "notification": "Notification"
 }

@@ -8,3 +8,14 @@ export const mapColorTag = function(text) {
       return "#C3C3C3";
   }
 };
+
+export const mapColorScoreTag = function(text) {
+  switch (text) {
+    case "bad":
+      return "#C3C3C3";
+    case "medium":
+      return "#ffc107";
+    case "good":
+      return "#4dbd74";
+  }
+};

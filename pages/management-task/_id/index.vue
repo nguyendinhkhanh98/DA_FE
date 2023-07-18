@@ -162,6 +162,9 @@
       <!-- <a-card class="shadow mt-3">
         <CostSetting :projectId="routeId" />
       </a-card> -->
+      <a-card class="shadow mt-3 chat-task">
+        <TaskHistoryChat />
+      </a-card>
     </div>
   </div>
 </template>
@@ -175,18 +178,20 @@ import SkillSelectOption from "@/components/ManagementTask/SkillSelectOption.vue
 import TaskHistory from "@/components/BusinessSkillSet/TaskHistory.vue";
 import UserProjectRoleConfig from "@/components/ProjectATV/UserProjectRoleConfig";
 import CostSetting from "@/components/InvoiceManagement/CostSetting";
+import TaskHistoryChat from "../../../components/Common/Chart/TaskHistoryChat.vue";
 
 export default {
   name: "DetailTask",
   middleware: "permissions",
   meta: {
-    permissions: ["admin"]
+    permissions: ["admin", "manager", "leader", "developer", "tester"]
   },
   components: {
     SkillSelectOption,
     TaskHistory,
     UserProjectRoleConfig,
-    CostSetting
+    CostSetting,
+    TaskHistoryChat
   },
   data() {
     return {
@@ -400,5 +405,8 @@ export default {
 <style>
 .ant-tag-large {
   line-height: 30px;
+}
+.chat-task {
+  width: 100%;
 }
 </style>

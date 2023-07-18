@@ -26,6 +26,7 @@ export default function({ $axios, redirect }) {
   });
   $axios.onError(error => {
     const code = parseInt(error.response && error.response.status);
+    console.log('code', code)
     if ([403, 401].includes(code)) {
       localStorage.clear();
       redirect("/login");

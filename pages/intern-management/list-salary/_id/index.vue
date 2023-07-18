@@ -40,10 +40,10 @@
         <a-button type="primary" @click="goToHistorySalary(text.internid)">{{ $t("detail") }}</a-button>
       </span>
     </a-table>
-    <div class="chart mt-5">
+    <!-- <div class="chart mt-5">
       <h1>{{ $t("salary_chart") }}</h1>
       <line-chart v-if="historySalary.length" :data="historySalary"></line-chart>
-    </div>
+    </div> -->
     <a-modal v-if="historySalary.length > 0" v-model="visible" :title="$t('update_salary')" @ok="onUpdateSalary">
       <div class="mt-3 mb-3">
         <a-input-number

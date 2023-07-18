@@ -52,3 +52,8 @@ export default {
   }
 };
 </script>
+<style>
+.ant-table {
+  font-size: 15px;
+}
+</style>

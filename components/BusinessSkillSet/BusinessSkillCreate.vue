@@ -39,8 +39,8 @@
               { rules: [{ required: false, message: $t('default_error_empty') + ' ' + $t('category') }] }
             ]"
           >
-            <template v-for="category in listCategory">
-              <a-select-option :key="category.category_id">
+            <template>
+              <a-select-option :key="category.category_id" v-for="category in listCategory">
                 {{ category.category_name }}
               </a-select-option>
             </template>
@@ -116,7 +116,7 @@ export default {
       });
     },
     filterOption(input, option) {
-      console.log("option", option)
+      console.log("option", option);
       return option.componentOptions?.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0;
     }
   }

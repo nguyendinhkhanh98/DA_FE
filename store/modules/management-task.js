@@ -5,7 +5,8 @@ export const state = () => ({
   listBusinessLevel: [],
   latestAssessmentApproved: [],
   latestBusinessAssessmentApproved: [],
-  listTaskHistories: []
+  listTaskHistories: [],
+  isChangeTask: false
 });
 
 export const mutations = {
@@ -32,6 +33,9 @@ export const mutations = {
   },
   setListTaskHistories(state, list) {
     state.listTaskHistories = list;
+  },
+  setIsChangeTask(state, value) {
+    state.isChangeTask = value
   }
 };
 
@@ -89,6 +93,7 @@ export const actions = {
   async getAllHistoryByTaskId({ commit }, taskId) {
     let { data } = await this.$request.get(`/api/v2/business-skill-set/task-history?id=${taskId}`);
     commit("setListTaskHistories", data.data);
+    return data
   },
   async getAllTaskHistory({ commit }) {
     let { data } = await this.$request.get(`/api/v2/business-skill-set/task-history/view-all`);

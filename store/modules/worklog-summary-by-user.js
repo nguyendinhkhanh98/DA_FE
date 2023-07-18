@@ -56,17 +56,24 @@ export const mutations = {
       worklogsNew = worklogsNew.map((item) => {
         const countTaskOntime = item?.filter(i => i?.status == 'done' && moment(i?.updated_at).isBefore(i?.end_date))?.length
         const totalTask = item?.length || 0
+        const totalScore = item?.reduce((prev, curr) => curr?.score || 0 + prev, 0)
+        const totalScored = item?.filter(item => item?.score && item?.score != 0)?.length
         return {
           countTaskOntime,
           totalTask,
           projectName: item?.[0]?.projectName || '-',
-          roleName: item?.[0]?.roleName || '-'
+          roleName: item?.[0]?.roleName || '-',
+          qualityScore: totalScored ? (totalScore/totalScored).toFixed(2) : 0,
+          evaluateScore: totalScored ? (totalScore/totalScored + countTaskOntime/totalTask)/2 : 0
         }
       })
-      console.log('worklogsNew', worklogsNew)
+      // general.averageEvaluateScore =
+      const total = worklogsNew.filter(item => item?.evaluateScore != 0 )?.length
+      const totalEvaluateScore = worklogsNew.reduce((prev, curr) => curr?.evaluateScore || 0 + prev, 0)
       return {
         ...general,
-        worklogs: worklogsNew
+        worklogs: worklogsNew,
+        averageEvaluateScore: total ? totalEvaluateScore/total : 0
       }
     })
   }
@@ -100,10 +107,8 @@ export const actions = {
     let { data } = await this.$request.get(`/api/v2/evaluate-task?since=${payload?.since}&until=${payload?.until}`);
     console.log('data', data)
     if (!data.error) {
-      // commit("setEvaluateTaskData", data.data);
       state.evaluateTaskData = data.data
     }
-    console.log('state.evaluateTaskData', state.evaluateTaskData)
     return data;
   }
 };

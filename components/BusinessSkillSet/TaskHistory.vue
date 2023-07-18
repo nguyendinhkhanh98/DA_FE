@@ -8,7 +8,14 @@
         <a-button type="primary" @click="onAddNew"><i class="fas fa-plus mr-1" />{{ $t("add_history") }}</a-button>
       </a-col>
     </a-row>
-    <a-table size="small" :rowKey="record => record.id" :columns="columns" :data-source="items" class="mt-2">
+    <a-table
+      size="small"
+      :rowKey="record => record.id"
+      :columns="columns"
+      :data-source="dataSource"
+      :pagination="pagination"
+      class="mt-2"
+    >
       <template>
         <span v-for="(column, index) of columns" :key="index" :slot="column.slots.title">{{
           $t(column.slots.title)
@@ -59,6 +66,41 @@
       <template slot="taskHistoryStatus" slot-scope="text, record">
         <a-tag :color="mapColorTag(record.status)"> {{ record.status }} </a-tag>
       </template>
+
+      <template slot="evaluateScore" slot-scope="text, record">
+        <a-tag
+          :color="
+            mapColorScoreTag(record.score < 5 ? 'bad' : record.score >= 5 && record.score < 8 ? 'medium' : 'good')
+          "
+          >{{ record.score || 0 }} / 10</a-tag
+        >
+      </template>
+
+      <!-- filter option status -->
+      <div slot="filterDropdown" slot-scope="{ column }" class="p-2">
+        <!-- role column -->
+        <a-select
+          v-if="column.key == 'task_history_status'"
+          v-ant-ref="c => (searchForcus = c)"
+          v-model="filterStatus"
+          mode="multiple"
+          allow-clear
+          placeholder="Please type"
+          style="width: 200px"
+          option-label-prop="label"
+          :filterOption="filterDataByStatus"
+        >
+          <a-select-option
+            v-for="(item, index) in listStatusTask"
+            :key="index"
+            :label="item.label | Snakeformat"
+            :value="item.value"
+          >
+            {{ item.label | Snakeformat }}
+          </a-select-option>
+        </a-select>
+      </div>
+      <a-icon slot="filterIcon" type="search" />
     </a-table>
 
     <!-- Modal create -->
@@ -165,13 +207,23 @@
             </a-select-option>
           </a-select>
         </a-form-item>
+        <a-form-item :label="$t('evaluate_score')" v-if="isDisplayEvaluateScore">
+          <a-input
+            v-decorator="['evaluate_score', { rules: [{ required: true, message: $t('default_error_empty') }] }]"
+            :placeholder="'Điểm'"
+            type="number"
+            style="width: 100px"
+            max="10"
+            min="0"
+          />
+        </a-form-item>
       </a-form>
     </a-modal>
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
-import { mapColorTag } from "./const";
+import { mapState, mapActions, mapMutations } from "vuex";
+import { mapColorTag, mapColorScoreTag } from "./const";
 export default {
   data() {
     return {
@@ -229,7 +281,14 @@ export default {
           slots: { title: "task_history_status" },
           dataIndex: "task_history_status",
           key: "task_history_status",
-          scopedSlots: { customRender: "taskHistoryStatus" }
+          scopedSlots: { customRender: "taskHistoryStatus", filterDropdown: "filterDropdown", filterIcon: "filterIcon" }
+          // width: "200px"
+        },
+        {
+          slots: { title: "evaluate_score" },
+          dataIndex: "evaluate_score",
+          key: "evaluate_score",
+          scopedSlots: { customRender: "evaluateScore" }
           // width: "200px"
         },
         {
@@ -249,6 +308,7 @@ export default {
       currentId: null,
       updating: false,
       mapColorTag,
+      mapColorScoreTag,
       listStatusTask: [
         {
           label: "new",
@@ -262,14 +322,43 @@ export default {
           label: "done",
           value: "done"
         }
-      ]
+      ],
+      filterStatus: [],
+      pagination: {
+        pageSize: 10,
+        total: 0,
+        current: 1
+      },
+      isDisplayEvaluateScore: false
     };
   },
   computed: {
     ...mapState({
       items: state => state.modules["management-task"].listTaskHistories,
-      userList: state => state.modules["user-management"].userList
-    })
+      userList: state => state.modules["user-management"].userList,
+      isChangeTask: state => state.modules["management-task"].isChangeTask
+    }),
+    columns() {
+      let self = this;
+      return columns.filter(item => {
+        switch (item.key) {
+          case "task_history_status": {
+            item.filtered = self.dataFilter.filter.project.length;
+            item.onFilterDropdownVisibleChange = visible => {
+              setTimeout(() => visible && self.searchForcus.focus(), 0);
+            };
+            break;
+          }
+        }
+        return true;
+      });
+    },
+    dataSource() {
+      let clone = _.cloneDeep(this.items);
+      clone = this.filterDataByStatus(clone);
+      this.pagination.total = clone.length;
+      return clone;
+    }
   },
   methods: {
     ...mapActions({
@@ -281,6 +370,9 @@ export default {
       deleteFile: "modules/management-task/deleteFile",
       getFile: "modules/management-task/getFile"
     }),
+    ...mapMutations({
+      setIsChangeTask: "modules/management-task/setIsChangeTask"
+    }),
     handleChange(value, key, column) {
       const target = this.items.find(item => item.id == key);
       const index = this.items.findIndex(item => item.id == key);
@@ -290,6 +382,7 @@ export default {
       }
     },
     edit(record) {
+      this.isDisplayEvaluateScore = record?.status == "done";
       this.form = this.$form.createForm(this, {
         mapPropsToFields: () => {
           return {
@@ -313,6 +406,9 @@ export default {
             }),
             file_report: this.$form.createFormField({
               value: record.fileReport
+            }),
+            evaluate_score: this.$form.createFormField({
+              value: record?.score || 0
             })
           };
         }
@@ -383,8 +479,10 @@ export default {
             : this.fileDataReport.length
             ? listFilesReport
             : [],
-          status: values.status
+          status: values.status,
+          score: values?.evaluate_score || 0
         };
+        console.log("payload", payload);
         payload.attachment = JSON.stringify(payload.attachment);
         payload.fileReport = JSON.stringify(payload.fileReport);
         try {
@@ -424,6 +522,7 @@ export default {
           });
         }
       });
+      this.setIsChangeTask(true);
     },
     onSelectChange(data) {
       console.log(data);
@@ -465,6 +564,14 @@ export default {
         onSuccess("Ok");
         this.$notification.success({ message: "Upload file successfully!" });
       }, 0);
+    },
+    filterDataByStatus(clone) {
+      if (this.filterStatus?.length) {
+        return clone.filter(item => {
+          return this.filterStatus.includes(item?.status);
+        });
+      }
+      return clone;
     }
   },
   async mounted() {

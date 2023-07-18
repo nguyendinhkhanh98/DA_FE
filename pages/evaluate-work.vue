@@ -117,8 +117,37 @@
       <template slot="allTask" slot-scope="text, record">
         {{ record.allTask }}
       </template>
-      <template slot="pointEvaluate" slot-scope="text">
-        {{ text }}
+      <template slot="pointEvaluate" slot-scope="text, record">
+        {{ record.averageEvaluateScore }}
+      </template>
+      <template slot="rankEvaluate" slot-scope="text, record">
+        <a-tag
+          :color="
+            mapColorScoreEvaluateTag(
+              record.averageEvaluateScore == 0
+                ? 'notEvaluate'
+                : record.averageEvaluateScore > 0 && record.averageEvaluateScore <= 5
+                ? 'bad'
+                : record.averageEvaluateScore > 5 && record.averageEvaluateScore < 8
+                ? 'average'
+                : record.averageEvaluateScore >= 8 && record.averageEvaluateScore < 9
+                ? 'good'
+                : 'excellent'
+            )
+          "
+        >
+          {{
+            record.averageEvaluateScore == 0
+              ? "Chưa đánh giá"
+              : record.averageEvaluateScore > 0 && record.averageEvaluateScore <= 5
+              ? "Bad"
+              : record.averageEvaluateScore > 5 && record.averageEvaluateScore < 8
+              ? "Medium"
+              : record.averageEvaluateScore >= 8 && record.averageEvaluateScore < 9
+              ? "Good"
+              : "Excellent"
+          }}
+        </a-tag>
       </template>
 
       <template slot="expandedRowRender" slot-scope="text">
@@ -147,6 +176,9 @@
           <template slot="totalTask" slot-scope="text, record">
             {{ record.totalTask }}
           </template>
+          <template slot="qualityScore" slot-scope="text, record">
+            {{ record.qualityScore }}
+          </template>
           <template slot="roleName" slot-scope="text, record">
             {{ record.roleName }}
           </template>
@@ -162,7 +194,13 @@ import moment from "moment";
 import * as CONST from "@/constants/index.js";
 import * as Excel from "exceljs/dist/exceljs.min.js";
 import * as FileSaver from "file-saver";
-import { columns, userColumns, excelColumns, excelColumnsByTask } from "./worklog-detail-by-user/const";
+import {
+  columns,
+  userColumns,
+  excelColumns,
+  excelColumnsByTask,
+  mapColorScoreEvaluateTag
+} from "./worklog-detail-by-user/const";
 
 const EXCEL_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 
@@ -189,11 +227,12 @@ export default {
       authors: [],
       selectedProjects: [],
       checkedLastWeek: true,
-      startDate: this.$moment().subtract(1, "weeks").startOf("isoWeek"),
-      endDate: this.$moment().subtract(1, "weeks").endOf("isoWeek"),
+      startDate: this.$moment().subtract(1, "months").startOf("month"),
+      endDate: this.$moment().subtract(1, "months").endOf("month"),
       wrapperContainerCol: CONST.WRAPPER_COLUMN_CONTAINER_SINGLE,
       actionCol: CONST.ACTION_COLUMN_SINGLE,
-      isShowTable: false
+      isShowTable: false,
+      mapColorScoreEvaluateTag
     };
   },
   computed: {
@@ -276,8 +315,8 @@ export default {
           project: this.selectedProjects.length ? this.selectedProjects : undefined
         },
         authors: this.authors,
-        since: this.startDate.valueOf(),
-        until: this.endDate.valueOf(),
+        since: moment(this.startDate).format("YYYY-MM-DD HH:mm:ss"),
+        until: moment(this.endDate).format("YYYY-MM-DD HH:mm:ss"),
         jiraUrl: this.jiraUrl
       };
 
@@ -306,7 +345,6 @@ export default {
       // console.log("this.uniqueInstances", this.uniqueInstances);
       await this.getAllEvaluateTask(payload);
       this.setUserTaskEvaluate();
-      console.log("this.userTaskEvaluate", this.userTaskEvaluate);
       this.isShowTable = true;
       this.loading = false;
     },

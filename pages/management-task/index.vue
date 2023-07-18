@@ -5,7 +5,7 @@
     <a-row type="flex" align="bottom" justify="space-between">
       <span class="text-bold">{{ $t("total_result") }} : {{ dataSource.length }}</span>
 
-      <a-button type="primary" @click="gotoDetail('add')" style="display: inline-block">
+      <a-button type="primary" v-if="role.includes('admin')" @click="gotoDetail('add')" style="display: inline-block">
         <i class="fas fa-plus mr-2"></i> <span>{{ $t("create") }}</span>
       </a-button>
     </a-row>
@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import { filterSkillNotNull, columns, mapColorTag } from "./const";
 import * as CONST from "@/constants/index.js";
 import { removeVietnameseTones } from "@/utils/skillSet/skillSet.utils.js";
@@ -162,7 +162,7 @@ import TagTooltip from "@/components/TagTooltip";
 export default {
   middleware: "permissions",
   meta: {
-    permissions: ["admin"]
+    permissions: ["admin", "manager", "leader", "developer", "tester"]
   },
   components: {
     TagTooltip
@@ -202,7 +202,10 @@ export default {
 
       // this.dataFilter.pagination.total = clone.length;
       return clone;
-    }
+    },
+    ...mapGetters({
+      role: "role"
+    })
   },
   async created() {
     this.loading = true;

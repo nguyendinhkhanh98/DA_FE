@@ -5,7 +5,7 @@
         <table class="w-100 table-bordered">
           <thead class="ant-table-thead">
             <tr>
-              <th style="width: 50px;"></th>
+              <th style="width: 50px"></th>
               <th class="wrapper-header" v-for="column in columns" :key="column.key" :span="column.span">
                 {{ $t(column.title) }}
               </th>
