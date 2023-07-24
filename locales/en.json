@@ -503,5 +503,6 @@
   "user_name": "Username",
   "evaluate_work": "Evaluate work",
   "evaluate_score": "Evaluate score",
-  "notification": "Notification"
+  "notification": "Notification",
+  "all_task": "List task me"
 }

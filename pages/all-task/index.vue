@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <a-card>
     <a-row type="flex" align="middle" justify="space-between">
       <a-col>
         <span class="h1">{{ $t("task_history") }}</span>
       </a-col>
-      <a-col class="text-right">
+      <!-- <a-col class="text-right">
         <a-button type="primary" @click="onAddNew"><i class="fas fa-plus mr-1" />{{ $t("add_history") }}</a-button>
-      </a-col>
+      </a-col> -->
     </a-row>
     <a-table
       size="small"
@@ -22,6 +22,9 @@
         }}</span>
       </template>
       <template slot="no" slot-scope="text, record, index">{{ index + 1 }} </template>
+      <template slot="projectName" slot-scope="text, record">
+        {{ record.projectName }}
+      </template>
       <template slot="startDate" slot-scope="text">
         <template>
           {{ text ? $moment(text).format("YYYY/MM/DD") : null }}
@@ -49,9 +52,9 @@
       </template>
       <template slot="actionCol" slot-scope="text, record">
         <a-button @click="edit(record)" type="primary" icon="edit" size="small" />
-        <a-popconfirm title="Sure to delete?" @confirm="onDelete(record.id)">
+        <!-- <a-popconfirm title="Sure to delete?" @confirm="onDelete(record.id)">
           <a-button type="danger" icon="delete" :loading="updating" size="small" />
-        </a-popconfirm>
+        </a-popconfirm> -->
       </template>
       <template slot="fileReport" slot-scope="listFilesReport">
         <div v-if="listFilesReport && listFilesReport.length">
@@ -122,6 +125,7 @@
             style="width: 100%"
             @change="onSelectChange"
             v-decorator="['user_id', { rules: [{ required: true, message: 'This field is required' }] }]"
+            :disabled="!role.includes('admin')"
           >
             <a-select-option v-for="(item, index) in userList" :key="index" :value="item.id">
               {{ item.fullName }}
@@ -134,15 +138,16 @@
             v-decorator="['start_date', { rules: [{ required: true, message: 'This field is required' }] }]"
             :format="'YYYY/MM/DD'"
             :allowClear="false"
+            :disabled="!role.includes('admin')"
           />
         </a-form-item>
 
         <a-form-item :label="$t('end_date')">
-          <a-date-picker v-decorator="['end_date']" :format="'YYYY/MM/DD'" />
+          <a-date-picker v-decorator="['end_date']" :format="'YYYY/MM/DD'" :disabled="!role.includes('admin')" />
         </a-form-item>
 
         <a-form-item :label="$t('comment')">
-          <a-textarea v-decorator="['comment']" :auto-size="{ minRows: 4 }" />
+          <a-textarea v-decorator="['comment']" :auto-size="{ minRows: 4 }" :disabled="!role.includes('admin')" />
         </a-form-item>
 
         <a-form-item :label="$t('attachment')">
@@ -167,7 +172,7 @@
             :customRequest="customRequest"
             :multiple="true"
           >
-            <a-button> <a-icon type="upload" /> {{ $t("upload_file") }} </a-button>
+            <a-button :disabled="!role.includes('admin')"> <a-icon type="upload" /> {{ $t("upload_file") }} </a-button>
           </a-upload>
         </a-form-item>
         <a-form-item :label="$t('file_report')">
@@ -215,15 +220,16 @@
             style="width: 100px"
             max="10"
             min="0"
+            :disabled="!role.includes('admin')"
           />
         </a-form-item>
       </a-form>
     </a-modal>
-  </div>
+  </a-card>
 </template>
 <script>
-import { mapState, mapActions, mapMutations } from "vuex";
-import { mapColorTag, mapColorScoreTag } from "./const";
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
+import { mapColorTag, mapColorScoreTag } from "../../components/BusinessSkillSet/const";
 export default {
   data() {
     return {
@@ -232,13 +238,12 @@ export default {
           key: "no",
           slots: { title: "no_" },
           scopedSlots: { customRender: "no" }
-          // width: "50px"
         },
         {
-          dataIndex: "full_name",
-          key: "name",
-          slots: { title: "full_name" }
-          // width: "150px"
+          dataIndex: "project_name",
+          key: "project_name",
+          slots: { title: "project_name" },
+          scopedSlots: { customRender: "projectName" }
         },
         {
           slots: { title: "comment" },
@@ -250,52 +255,45 @@ export default {
         {
           slots: { title: "start_date" },
           defaultSortOrder: "descend",
-          sorter: (a, b) => a.start_date.localeCompare(b.start_date),
+          sorter: (a, b) => a.start_date?.localeCompare(b.start_date),
           dataIndex: "start_date",
           key: "start_date",
           scopedSlots: { customRender: "startDate" }
-          // width: "145px"
         },
         {
           slots: { title: "end_date" },
           dataIndex: "end_date",
           key: "end_date",
           scopedSlots: { customRender: "endDate" }
-          // width: "145px"
         },
         {
           slots: { title: "attachment" },
           dataIndex: "attachment",
           key: "attachment",
           scopedSlots: { customRender: "attackCol" }
-          // width: "200px"
         },
         {
           slots: { title: "file_report" },
           dataIndex: "fileReport",
           key: "file_report",
           scopedSlots: { customRender: "fileReport" }
-          // width: "200px"
         },
         {
           slots: { title: "task_history_status" },
           dataIndex: "task_history_status",
           key: "task_history_status",
           scopedSlots: { customRender: "taskHistoryStatus", filterDropdown: "filterDropdown", filterIcon: "filterIcon" }
-          // width: "200px"
         },
         {
           slots: { title: "evaluate_score" },
           dataIndex: "evaluate_score",
           key: "evaluate_score",
           scopedSlots: { customRender: "evaluateScore" }
-          // width: "200px"
         },
         {
           slots: { title: "action" },
           key: "action",
           scopedSlots: { customRender: "actionCol" }
-          // width: "55px",
         }
       ],
       openModalAddOrUpdate: false,
@@ -329,36 +327,26 @@ export default {
         total: 0,
         current: 1
       },
-      isDisplayEvaluateScore: false
+      isDisplayEvaluateScore: false,
+      items: [],
+      currentProjectId: null,
+      currentScoreProject: 0
     };
   },
   computed: {
     ...mapState({
-      items: state => state.modules["management-task"].listTaskHistories,
       userList: state => state.modules["user-management"].userList,
       isChangeTask: state => state.modules["management-task"].isChangeTask
     }),
-    columns() {
-      let self = this;
-      return columns.filter(item => {
-        switch (item.key) {
-          case "task_history_status": {
-            item.filtered = self.dataFilter.filter.project.length;
-            item.onFilterDropdownVisibleChange = visible => {
-              setTimeout(() => visible && self.searchForcus.focus(), 0);
-            };
-            break;
-          }
-        }
-        return true;
-      });
-    },
     dataSource() {
       let clone = _.cloneDeep(this.items);
       clone = this.filterDataByStatus(clone);
       this.pagination.total = clone.length;
       return clone;
-    }
+    },
+    ...mapGetters({
+      role: "role"
+    })
   },
   methods: {
     ...mapActions({
@@ -413,6 +401,8 @@ export default {
           };
         }
       });
+      this.currentScoreProject = record?.score || 0;
+      this.currentProjectId = record.projectId;
       this.currentId = record.id;
       this.originFile = record.attachment;
       this.originFileReport = record.fileReport;
@@ -421,19 +411,6 @@ export default {
       this.openModalAddOrUpdate = true;
       this.fileData = [];
       this.fileDataReport = [];
-    },
-    async onDelete(id) {
-      this.updating = true;
-      await this.removeHistory(id);
-      await this.getAllHistoryByTaskId(this.routeId);
-      this.updating = false;
-    },
-    onAddNew() {
-      this.openModalAddOrUpdate = true;
-      this.fileData = [];
-      this.filePath = [];
-      this.filePathReport = [];
-      this.form = this.$form.createForm(this, { name: "coordinated" });
     },
     handleOk() {
       this.form.validateFields(async (err, values) => {
@@ -471,7 +448,7 @@ export default {
           user_id: values.user_id,
           start_date: this.$moment(values.start_date).format(),
           end_date: values.end_date ? this.$moment(values.end_date).format() : null,
-          task_id: this.routeId,
+          task_id: this.currentProjectId,
           comment: values.comment,
           attachment: this.filePath.length ? this.filePath : this.fileData.length ? listFiles : [],
           fileReport: this.filePathReport.length
@@ -480,7 +457,7 @@ export default {
             ? listFilesReport
             : [],
           status: values.status,
-          score: values?.evaluate_score || 0
+          score: values?.evaluate_score || this.currentScoreProject || 0
         };
         payload.attachment = JSON.stringify(payload.attachment);
         payload.fileReport = JSON.stringify(payload.fileReport);
@@ -500,7 +477,8 @@ export default {
               await this.deleteFile(element);
             }
           }
-          await this.getAllHistoryByTaskId(this.routeId);
+          const data = await this.$request.get("/api/v2/business-skill-set/task-history-user");
+          this.items = data?.data?.data || [];
           this.$notification.success({
             message: "Success",
             description: `${this.currentId ? "Update" : "Add new"} history successfully`
@@ -574,9 +552,11 @@ export default {
     }
   },
   async mounted() {
-    this.routeId = this.$route.params.id;
-    await this.getAllHistoryByTaskId(this.routeId);
     this.getAllUser();
+  },
+  async created() {
+    const data = await this.$request.get("/api/v2/business-skill-set/task-history-user");
+    this.items = data?.data?.data || [];
   }
 };
 </script>

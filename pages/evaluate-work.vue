@@ -83,7 +83,7 @@
 
     <a-row type="flex" align="bottom" justify="space-between" v-if="userTaskEvaluate.length && isShowTable">
       <span class="text-bold">{{ $t("total_result") }}: {{ userTaskEvaluate.length }}</span>
-      <span style="float: right">
+      <!-- <span style="float: right">
         <a-button class="mb-1" type="primary" ghost @click="handleExportByDate">
           <i class="fas fa-file-excel mr-1 ml-1" style="color: green"></i>
           {{ $t("export_detail_by_date") }}
@@ -92,7 +92,7 @@
           <i class="fas fa-file-excel mr-1 ml-1" style="color: green"></i>
           {{ $t("export_detail_by_task") }}
         </a-button>
-      </span>
+      </span> -->
     </a-row>
     <a-table
       bordered

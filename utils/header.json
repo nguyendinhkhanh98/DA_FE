@@ -15,6 +15,13 @@
         "subItems": []
       },
       {
+        "key": "all-task",
+        "name": "all_task",
+        "icon": "fas fa-tasks mr-1",
+        "link": "/all-task",
+        "subItems": []
+      },
+      {
         "key": "edit-profile",
         "name": "edit_profile",
         "icon": "fas fa-edit mr-1",

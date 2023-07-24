@@ -202,6 +202,12 @@
             {{ record.role }}
           </a-tag>
         </template>
+        <template slot="averageScore" slot-scope="text, record">
+          {{ record.averageScore == 0 ? "Chưa đánh giá" : record.averageScore }}
+        </template>
+        <template slot="generalScore">
+          <a-input-number ref="experience_time" :default-value="0" :disabled="false" :min="0" allowClear />
+        </template>
 
         <template slot="expandedRowRender" slot-scope="text">
           <a-table
@@ -233,18 +239,88 @@
                 {{ text ? $moment(text).format("YYYY/MM/DD") : null }}
               </template>
             </template>
+            <template slot="score" slot-scope="text, record">
+              <a-tag
+                :color="
+                  mapColorScoreTag(record.score < 5 ? 'bad' : record.score >= 5 && record.score < 8 ? 'medium' : 'good')
+                "
+                >{{ !record.score || record.score == 0 ? "Chưa đánh giá" : `${record.score}/10` }}</a-tag
+              >
+            </template>
           </a-table>
         </template>
       </a-table>
+      <a-row>
+        <label class="score-class-general">{{ "Điểm đánh giá chất lượng công việc trung bình" }}</label>
+        <a-tag color="#108ee9" class="tag-averages-score">{{ averageScoreProject }}</a-tag>
+      </a-row>
+    </a-card>
+    <a-card class="shadow-2">
+      <h1>{{ "Đánh giá chung" }}</h1>
+      <label class="score-class-general">{{ "Điểm đánh giá chung" }}</label>
+      <a-input-number
+        ref="experience_time"
+        :value="generalScore"
+        :disabled="false"
+        :min="0"
+        :max="10"
+        allowClear
+        @change="value => handleFormChange(value)"
+      />
+      <a-row class="right-direction dock-action">
+        <a-button type="primary" @click="handleChangeScore" :disabled="isDisableButton">
+          <span>
+            {{ $t("submit") }}
+          </span>
+        </a-button>
+      </a-row>
+    </a-card>
+    <a-card class="shadow-2">
+      <div class="rank-employee">
+        <h1>{{ "Xếp hạng" }}</h1>
+        <a-tag
+          class="rank-employee-tag"
+          :color="
+            mapColorRankTag(
+              generalScore + (parseFloat(averageScoreProject) || 0) == 0
+                ? 'no'
+                : generalScore + (parseFloat(averageScoreProject) || 0) < 10
+                ? 'bad'
+                : generalScore + (parseFloat(averageScoreProject) || 0) >= 10 &&
+                  generalScore + (parseFloat(averageScoreProject) || 0) < 16
+                ? 'medium'
+                : generalScore + (parseFloat(averageScoreProject) || 0) >= 16 &&
+                  generalScore + (parseFloat(averageScoreProject) || 0) < 18
+                ? 'good'
+                : 'excelent'
+            )
+          "
+        >
+          {{
+            generalScore + (parseFloat(averageScoreProject) || 0) == 0
+              ? "Chưa đánh giá"
+              : generalScore + (parseFloat(averageScoreProject) || 0) < 10
+              ? "Yếu"
+              : generalScore + (parseFloat(averageScoreProject) || 0) >= 10 &&
+                generalScore + (parseFloat(averageScoreProject) || 0) < 16
+              ? "Trung bình"
+              : generalScore + (parseFloat(averageScoreProject) || 0) >= 16 &&
+                generalScore + (parseFloat(averageScoreProject) || 0) < 18
+              ? "Tốt"
+              : "Xuất sắc"
+          }}
+        </a-tag>
+      </div>
     </a-card>
   </div>
 </template>
 
 <script>
-import { columns, projectColumns, mapColorTag } from "../_id/const";
+import { columns, projectColumns, mapColorTag, mapColorRankTag } from "../_id/const";
 import { mapState, mapActions } from "vuex";
 import RoleSetting from "@/components/UserManagement/RoleSetting";
 import * as CONST from "@/constants/index.js";
+import { mapColorScoreTag } from "../../../components/BusinessSkillSet/const";
 
 export default {
   data() {
@@ -280,7 +356,11 @@ export default {
         total: 0,
         current: 1
       },
-      mapColorTag
+      mapColorTag,
+      mapColorScoreTag,
+      mapColorRankTag,
+      generalScore: 0,
+      isDisableButton: true
     };
   },
   components: {
@@ -296,6 +376,11 @@ export default {
     }),
     activeRole() {
       return this.roleList.filter(item => !item.delete_flg);
+    },
+    averageScoreProject() {
+      const total = this.formSubmit?.project?.filter(item => item?.averageScore == 0)?.length;
+      const totalScore = this.formSubmit?.project?.reduce((prev, curr) => prev + parseFloat(curr.averageScore), 0);
+      return total ? (totalScore / total).toFixed(2) : "Chưa có điểm đánh giá trong dự án";
     }
   },
   filters: {
@@ -394,11 +479,8 @@ export default {
       }
 
       this.nameUser = this.formSubmit.fullName;
+      this.generalScore = this.formSubmit.general_score || 0;
     },
-
-    // getDataSource(data) {
-    //   const fullName = data?.fullName
-    // },
 
     async handleChange(infor) {
       let errorMessage = null;
@@ -482,6 +564,18 @@ export default {
     },
     showModalRoleSetting() {
       this.$refs["role-setting"].showModal();
+    },
+    handleFormChange(value) {
+      this.isDisableButton = value == this.generalScore;
+      this.generalScore = value;
+    },
+    async handleChangeScore() {
+      if (this.isDisableButton) return;
+      await this.$request.put("/api/profile/editGeneralScore", { generalScore: this.generalScore, id: this.userId });
+      this.$notification.success({
+        message: "Update success"
+      });
+      this.isDisableButton = true;
     }
   }
 };
@@ -493,5 +587,34 @@ export default {
 }
 .shadow-2 {
   margin-top: 30px;
+}
+.right-direction {
+  direction: rtl;
+}
+.score-class-general {
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 16px;
+  margin-right: 20px;
+}
+.rank-employee {
+  display: flex;
+  align-items: center;
+}
+.rank-employee-tag {
+  margin-left: 20px;
+  width: 100px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+}
+.tag-averages-score {
+  width: 70px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
 }
 </style>

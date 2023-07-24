@@ -13,8 +13,8 @@
               </tr>
             </thead>
             <tbody class="ant-table-tbody">
-              <div v-for="data in dataSource">
-                <tr :key="`${data.id}`" :id="`${data.id}`">
+              <div v-for="data in dataSource" :key="`${data.id}`">
+                <tr :id="`${data.id}`">
                   <td class="ant-table-row-expand-icon-cell">
                     <div
                       role="button"

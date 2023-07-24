@@ -150,9 +150,9 @@ export default {
           items: []
         },
         {
-          key: "user-employee_management",
+          key: "employee-management",
           name: "employee_management",
-          "a-icon": "team",
+          "a-icon": "solution",
           link: "/employee-management",
           items: []
         },

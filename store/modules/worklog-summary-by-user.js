@@ -56,7 +56,7 @@ export const mutations = {
       worklogsNew = worklogsNew.map((item) => {
         const countTaskOntime = item?.filter(i => i?.status == 'done' && moment(i?.updated_at).isBefore(i?.end_date))?.length
         const totalTask = item?.length || 0
-        const totalScore = item?.reduce((prev, curr) => curr?.score || 0 + prev, 0)
+        const totalScore = item?.reduce((prev, curr) => (curr?.score || 0) + prev, 0)
         const totalScored = item?.filter(item => item?.score && item?.score != 0)?.length
         return {
           countTaskOntime,
@@ -64,12 +64,11 @@ export const mutations = {
           projectName: item?.[0]?.projectName || '-',
           roleName: item?.[0]?.roleName || '-',
           qualityScore: totalScored ? (totalScore/totalScored).toFixed(2) : 0,
-          evaluateScore: totalScored ? (totalScore/totalScored + countTaskOntime/totalTask)/2 : 0
+          evaluateScore: totalScored ? totalScore/totalScored : 0
         }
       })
-      // general.averageEvaluateScore =
       const total = worklogsNew.filter(item => item?.evaluateScore != 0 )?.length
-      const totalEvaluateScore = worklogsNew.reduce((prev, curr) => curr?.evaluateScore || 0 + prev, 0)
+      const totalEvaluateScore = worklogsNew.reduce((prev, curr) => (curr?.evaluateScore || 0) + prev, 0)
       return {
         ...general,
         worklogs: worklogsNew,
