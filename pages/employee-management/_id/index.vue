@@ -383,7 +383,7 @@ export default {
     averageScoreProject() {
       const total = this.formSubmit?.project?.filter(item => item?.averageScore == 0)?.length;
       const totalScore = this.formSubmit?.project?.reduce((prev, curr) => prev + parseFloat(curr.averageScore), 0);
-      return total ? (totalScore / total).toFixed(2) : "Chưa có điểm đánh giá trong dự án";
+      return total ? (totalScore / total).toFixed(2) : "Chưa đánh giá";
     }
   },
   filters: {
