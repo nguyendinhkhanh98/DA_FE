@@ -257,16 +257,19 @@
     </a-card>
     <a-card class="shadow-2">
       <h1>{{ "Đánh giá chung" }}</h1>
-      <label class="score-class-general">{{ "Điểm đánh giá chung" }}</label>
-      <a-input-number
-        ref="experience_time"
-        :value="generalScore"
-        :disabled="false"
-        :min="0"
-        :max="10"
-        allowClear
-        @change="value => handleFormChange(value)"
-      />
+      <div class="score-div">
+        <label class="score-class-general">{{ "Điểm đánh giá chung" }}</label>
+        <a-input-number
+          ref="experience_time"
+          :value="generalScore"
+          :disabled="false"
+          :min="0"
+          :max="10"
+          allowClear
+          @change="value => handleFormChange(value)"
+          class="input-score"
+        />
+      </div>
       <a-row class="right-direction dock-action">
         <a-button type="primary" @click="handleChangeScore" :disabled="isDisableButton">
           <span>
@@ -602,7 +605,7 @@ export default {
 }
 .rank-employee-tag {
   margin-left: 20px;
-  width: 100px;
+  width: 150px;
   height: 30px;
   display: flex;
   justify-content: center;
@@ -610,11 +613,18 @@ export default {
   font-size: 18px;
 }
 .tag-averages-score {
-  width: 70px;
+  width: 150px;
   height: 30px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 16px;
+}
+.score-div {
+  display: flex;
+  align-items: center;
+}
+.input-score {
+  width: 80px !important;
 }
 </style>
