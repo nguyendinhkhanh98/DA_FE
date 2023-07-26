@@ -116,7 +116,6 @@ export default {
       });
     },
     filterOption(input, option) {
-      console.log("option", option);
       return option.componentOptions?.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0;
     }
   }

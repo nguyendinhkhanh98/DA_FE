@@ -5,7 +5,7 @@
     </div>
 
     <section class="ant-row qcd-modal-block shadow">
-      <span class="text-bold title">Statistic</span>
+      <span class="text-bold title">Thống kê</span>
       <a-tooltip placement="right" overlayClassName="qcd-report-description">
         <template slot="title">
           <a-table
@@ -19,13 +19,13 @@
         <a-icon type="question-circle" />
       </a-tooltip>
       <div class="ant-row qcd-modal-content">
-        <p class="description">Ratio of bug</p>
+        <p class="description">Tỉ lệ bug</p>
 
         <div class="ant-row qcd-modal-value pl-3 mt-3">
           <div class="ant-row">
-            <span class="ant-col-7 color-violet">Bug Ratio By Number</span>
-            <span class="ant-col-6 color-violet" :style="textEnd">Number of bug &nbsp;</span>
-            <span class="ant-col-9 color-violet"> / Number of issue</span>
+            <span class="ant-col-7 color-violet">Tỉ lệ bug theo số lượng</span>
+            <span class="ant-col-6 color-violet" :style="textEnd">Số lượng bug &nbsp;</span>
+            <span class="ant-col-9 color-violet"> / Số lượng issue</span>
             <span class="ant-col-2">Result</span>
           </div>
 
@@ -50,9 +50,9 @@
 
         <div class="ant-row qcd-modal-value pl-3">
           <div class="ant-row">
-            <span class="ant-col-7 color-violet">Bug Ratio By Hour</span>
-            <span class="ant-col-6 color-violet" :style="textEnd">Total hour of bug &nbsp;</span>
-            <span class="ant-col-9 color-violet"> / Total hour of issue</span>
+            <span class="ant-col-7 color-violet">Tỉ lệ bug theo thời gian</span>
+            <span class="ant-col-6 color-violet" :style="textEnd">Tổng thời gian fix bug &nbsp;</span>
+            <span class="ant-col-9 color-violet"> / Tổng thời gian issue</span>
             <span class="ant-col-2">Result</span>
           </div>
 
@@ -96,7 +96,7 @@
           </div>
         </div> -->
 
-        <div class="ant-row qcd-modal-value pl-3">
+        <!-- <div class="ant-row qcd-modal-value pl-3">
           <div class="ant-row">
             <span class="ant-col-7 color-violet">Degradation Ratio By Hour</span>
             <span class="ant-col-6 color-violet" :style="textEnd">Total hour of degradation &nbsp;</span>
@@ -115,7 +115,7 @@
               <label>{{ degrationRatioByHour }}</label>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </section>
 

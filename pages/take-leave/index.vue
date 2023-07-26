@@ -82,11 +82,8 @@ export default {
     onPanelChange(value, mode) {
       this.calendarValue = value;
       this.reRenderTodayMark();
-      console.log("valueOnPanelChange", value);
-      console.log("mode", mode);
     },
     onSelect(value) {
-      console.log("valueOnSelect", value);
       let year = value.get("year");
       let month = value.get("month") + 1;
       if (year != this.currentHistoryOffWork.year || month != this.currentHistoryOffWork.month) {
@@ -107,7 +104,6 @@ export default {
       }
     },
     getRefForToday(value) {
-      console.log("valueGetRefToday", value);
       if (value.isSame(this.$moment(), "day")) return "refToday";
     },
     async reRenderCellCalendar(momentValue) {
@@ -118,7 +114,6 @@ export default {
     reRenderTodayMark() {
       const action = () => {
         let todayRef = this.$refs.refToday;
-        console.log("todayRef", todayRef);
         if (this.wrapperTodayElement) {
           this.wrapperTodayElement.classList.remove("today-calendar");
         }

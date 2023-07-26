@@ -5,8 +5,8 @@ Vue.use(VueI18n);
 
 export default ({ app }) => {
   app.i18n = new VueI18n({
-    locale: "en",
-    fallbackLocale: "en",
+    locale: "vi",
+    fallbackLocale: "vi",
     messages: {
       en: require("~/locales/en.json"),
       ja: require("~/locales/ja.json"),

@@ -41,8 +41,6 @@ export const mutations = {
 
   setSummaryWorklogByProjectInMonth(state, listProjectName) {
     state.summaryWorklogsInMonth = [];
-    console.log("listProjectName", listProjectName)
-    console.log("state.userWorklog", state.userWorklogs);
     listProjectName.forEach(projectName => {
       let listUserWorklogs = state.userWorklogs
         .filter(item => item.projectName == projectName)
@@ -72,7 +70,6 @@ export const mutations = {
         userWorkdaysByProjectInMonth: listUserWorklogsDetail
       })
     })
-    console.log("summaryWorklogsInMonth", state.summaryWorklogsInMonth);
   }
 };
 
@@ -86,7 +83,6 @@ export const actions = {
   async getUserWorkdaysByProjectInMonth({ commit }, payload) {
     const { data } = await this.$request.post("/api/get-sum-user-workdays-by-project", payload);
     commit("concatWorklogs", data);
-    console.log("data", data)
     return data;
   },
   async saveUserWorkdaysByProjectInMonth({ commit }, payload) {

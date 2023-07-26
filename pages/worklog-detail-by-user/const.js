@@ -6,73 +6,48 @@ export const columns = [
     align: "center"
   },
   {
-    slots: { title: "Tên nhân viên" },
-    dataIndex: "fullName",
-    key: "fullName",
-    scopedSlots: { customRender: "fullName" }
+    slots: { title: "logged_date" },
+    dataIndex: "started",
+    key: "started",
+    scopedSlots: { customRender: "dateRender" }
   },
   {
-    slots: { title: "Số công việc hoàn thành đúng hạn" },
-    dataIndex: "allTaskOntime",
-    key: "allTaskOntime",
-    scopedSlots: { customRender: "allTaskOntime" }
+    slots: { title: "member" },
+    dataIndex: "member",
+    key: "member",
+    scopedSlots: { customRender: "memberRender" }
   },
   {
-    slots: { title: "Số công việc được giao" },
-    dataIndex: "allTask",
-    key: "allTask",
-    scopedSlots: { customRender: "allTask" }
-  },
-  {
-    slots: { title: "Điểm đánh giá" },
-    dataIndex: "pointEvaluate",
-    key: "pointEvaluate",
-    scopedSlots: { customRender: "pointEvaluate" }
-  },
-  {
-    slots: { title: "Xếp hạng" },
-    dataIndex: "rankEvaluate",
-    key: "rankEvaluate",
-    scopedSlots: { customRender: "rankEvaluate" }
+    slots: { title: "total_spent_time" },
+    dataIndex: "totalSpentTimeSecs",
+    key: "totalSpentTimeSecs",
+    scopedSlots: { customRender: "spentTime" }
   }
 ];
 
 export const userColumns = [
   {
-    slots: { title: "STT" },
-    key: "no",
-    scopedSlots: { customRender: "no" },
-    align: "center"
+    slots: { title: "started_time" },
+    dataIndex: "started",
+    key: "started",
+    scopedSlots: { customRender: "dateRender" }
   },
   {
-    slots: { title: "Dự án" },
-    dataIndex: "projectName",
-    key: "projectName",
-    scopedSlots: { customRender: "projectName" }
+    slots: { title: "issue" },
+    dataIndex: "issueKey",
+    key: "issueKey",
+    scopedSlots: { customRender: "issueRender" }
   },
   {
-    slots: { title: "Số công việc hoàn thành đúng hạn" },
-    dataIndex: "countTaskOntime",
-    key: "countTaskOntime",
-    scopedSlots: { customRender: "countTaskOntime" }
+    slots: { title: "summary" },
+    dataIndex: "summary",
+    key: "summary"
   },
   {
-    slots: { title: "Số công việc được giao" },
-    dataIndex: "totalTask",
-    key: "totalTask",
-    scopedSlots: { customRender: "totalTask" }
-  },
-  {
-    slots: { title: "Đánh giá chất lượng" },
-    dataIndex: "qualityScore",
-    key: "qualityScore",
-    scopedSlots: { customRender: "qualityScore" }
-  },
-  {
-    slots: { title: "Vai trò trong dự án" },
-    dataIndex: "roleName",
-    key: "roleName",
-    scopedSlots: { customRender: "roleName" }
+    slots: { title: "spent_time" },
+    dataIndex: "timeSpentSeconds",
+    key: "timeSpentSeconds",
+    scopedSlots: { customRender: "spentTime" }
   }
 ];
 
@@ -158,18 +133,3 @@ export const excelColumnsByTask = [
     width: 11
   }
 ];
-
-export const mapColorScoreEvaluateTag = function(text) {
-  switch (text) {
-    case "notEvaluate":
-      return "#C3C3C3";
-    case "bad":
-      return "#cd201f";
-    case "averate":
-      return "#ffc107";
-    case "good":
-      return "#4dbd74";
-    case "excellent":
-      return "#3b5999"
-  }
-};

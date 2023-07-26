@@ -190,12 +190,8 @@ export default {
       authors: [],
       selectedProjects: [],
       checkedLastWeek: true,
-      startDate: this.$moment()
-        .subtract(1, "weeks")
-        .startOf("isoWeek"),
-      endDate: this.$moment()
-        .subtract(1, "weeks")
-        .endOf("isoWeek"),
+      startDate: this.$moment().subtract(1, "weeks").startOf("isoWeek"),
+      endDate: this.$moment().subtract(1, "weeks").endOf("isoWeek"),
       wrapperContainerCol: CONST.WRAPPER_COLUMN_CONTAINER_SINGLE,
       actionCol: CONST.ACTION_COLUMN_SINGLE,
       isShowTable: false
@@ -300,7 +296,6 @@ export default {
         innerPayload.jiraUrl = url;
         payloads.push(innerPayload);
       });
-      console.log("payloads", payloads)
       this.resetWorklogs();
       for (let index = 0; index < payloads.length; index++) {
         await this.getUserWorklogs(payloads[index]);
@@ -313,12 +308,8 @@ export default {
     onChangeLastWeek(e) {
       let { checked } = e.target;
       if (checked) {
-        this.startDate = this.$moment()
-          .subtract(1, "weeks")
-          .startOf("isoWeek");
-        this.endDate = this.$moment()
-          .subtract(1, "weeks")
-          .endOf("isoWeek");
+        this.startDate = this.$moment().subtract(1, "weeks").startOf("isoWeek");
+        this.endDate = this.$moment().subtract(1, "weeks").endOf("isoWeek");
       } else {
         this.startDate = moment().startOf("month");
         this.endDate = moment();

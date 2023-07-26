@@ -102,9 +102,7 @@ export const actions = {
     return this.$request.post("/api/monthly-report", payload);
   },
   async getAllEvaluateTask({ commit, state }, payload) {
-    console.log('payload', payload)
     let { data } = await this.$request.get(`/api/v2/evaluate-task?since=${payload?.since}&until=${payload?.until}`);
-    console.log('data', data)
     if (!data.error) {
       state.evaluateTaskData = data.data
     }

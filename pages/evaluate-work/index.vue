@@ -194,13 +194,7 @@ import moment from "moment";
 import * as CONST from "@/constants/index.js";
 import * as Excel from "exceljs/dist/exceljs.min.js";
 import * as FileSaver from "file-saver";
-import {
-  columns,
-  userColumns,
-  excelColumns,
-  excelColumnsByTask,
-  mapColorScoreEvaluateTag
-} from "./worklog-detail-by-user/const";
+import { columns, userColumns, excelColumns, excelColumnsByTask, mapColorScoreEvaluateTag } from "./const";
 
 const EXCEL_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 
@@ -498,5 +492,5 @@ export default {
 };
 </script>
 <style scoped>
-@import url("./worklog-detail-by-user/style.css");
+@import url("./style.css");
 </style>

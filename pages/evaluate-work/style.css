@@ -1,0 +1,13 @@
+@media (min-width: 576px) {
+  .label-duration {
+    text-align: right;
+    padding-right: 9px;
+  }
+  .start-duration {
+    padding-left: 2px;
+  }
+}
+
+.start-duration {
+  width: 100%;
+}

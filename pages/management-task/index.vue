@@ -129,9 +129,9 @@
       </template>
 
       <template slot="action" slot-scope="text, record">
-        <a-tooltip :title="$t('fit_gap_task')">
+        <!-- <a-tooltip :title="$t('fit_gap_task')">
           <a-button type="primary" @click="gotoFitGapTask(text)" icon="line-chart" />
-        </a-tooltip>
+        </a-tooltip> -->
 
         <a-tooltip :title="$t('detail')">
           <a-button @click="gotoDetail(text)" icon="control" />

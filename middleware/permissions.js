@@ -23,9 +23,7 @@ export default function({ route, redirect }) {
   }
 
   let { meta } = route;
-  console.log('meta', meta)
   const permissions = meta.length && meta[0].permissions ? _.cloneDeep(meta[0].permissions) : -1;
-  console.log('permissions', permissions)
   // Validate role of user, if in list role of user contain => pass
   if (permissions !== -1) {
     let hasPermission = false;

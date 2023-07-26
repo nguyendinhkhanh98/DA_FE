@@ -27,13 +27,6 @@
         "items": []
       },
       {
-        "key": "qcd-report",
-        "name": "qcd_report",
-        "icon": "fas fa-chart-line mr-2",
-        "link": "/summary-report-by-issue/qcd-report",
-        "items": []
-      },
-      {
         "key": "summary-qcd-kpi",
         "name": "summary_qcd_kpi",
         "icon": "fas fa-chart-pie mr-2",
@@ -64,3 +57,4 @@
     ]
   }
 ]
+

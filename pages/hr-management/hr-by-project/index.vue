@@ -183,7 +183,6 @@ export default {
         this.loading = false;
         return;
       }
-      console.log("this.aggregateProjectListFromAllUrls", this.aggregateProjectListFromAllURLs);
       var arr = this.dateString.split("-");
       this.start = `${this.dateString}-21`;
       this.end = parseInt(arr[1]) + 1 > 12 ? `${parseInt(arr[0]) + 1}-01-20` : `${arr[0]}-0${parseInt(arr[1]) + 1}-20`;
@@ -238,9 +237,7 @@ export default {
       this.isShowTable = false;
     },
     onChange(date, dateString) {
-      console.log(date, dateString);
       this.dateString = dateString;
-      console.log("selectedMonth", this.selectedMonth);
     },
     workdayCount(start, end) {
       var first = start.clone().endOf("week"); // end of first week

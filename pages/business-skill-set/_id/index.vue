@@ -259,7 +259,7 @@ export default {
     if (!this.listLeader?.length) promise.push(this.getAndFillListLeader());
 
     await Promise.all(promise);
-    console.log("den")
+    console.log("den");
     this.loading = false;
   },
   computed: {
@@ -287,7 +287,6 @@ export default {
     },
     canShowIfNonPeriodAvaiable() {
       let inCreatePage = this.routeID == "add" && !this.loading;
-      console.log("stPeriod", this.listPeriod)
       let isEmptyPeriodList = this.listPeriod.length == 0;
       return inCreatePage && isEmptyPeriodList;
     },
@@ -299,7 +298,6 @@ export default {
       if (this.isHiddenSelfWhomLeader) {
         clone = this.userInfo && clone.filter(item => item.id != this.userInfo.id);
       }
-      console.log("clone", clone)
       return clone;
     },
     isEnabledSelectPeriod() {
@@ -358,9 +356,7 @@ export default {
     }),
     findAndSetRouteID() {
       let pathName = location.pathname;
-      console.log("pathName", pathName)
       let paths = _.filter(pathName.split("/"), o => o);
-      console.log("paths", paths)
       this.setRouteID(this.$route.params.id || paths[1]);
     },
     async commitData(data, type) {
