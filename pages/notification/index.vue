@@ -62,48 +62,16 @@
       :loading="loading"
       :pagination="pagination"
       @change="handleTableChange"
+      :rowClassName="(record, index) => (!record.isRead ? 'notification-unread' : '')"
     >
       <template v-for="column of columns" :slot="column.slots.title">{{ $t(column.slots.title) }}</template>
-      <!-- <template slot="no" slot-scope="text, record, index">
-        {{ (pagination.current - 1) * pagination.pageSize + index + 1 }}
-      </template> -->
+
       <template slot="ID" slot-scope="text, record">
         {{ record.id }}
       </template>
       <template slot="notification" slot-scope="text, record">
         {{ record.content }}
       </template>
-      <!-- <template slot="expandedRowRender" slot-scope="text">
-        <a-table
-          class="mt-1 mb-1"
-          :columns="userColumns"
-          :dataSource="text.userWorkdaysByProjectInMonth"
-          :pagination="false"
-          :rowKey="(record, index) => index"
-        >
-          <template v-for="column of userColumns" :slot="column.slots.title">
-            {{ $t(column.slots.title) }}
-          </template>
-          <template slot="no" slot-scope="text, record, index">
-            {{ index + 1 }}
-          </template>
-          <template slot="name" slot-scope="text">
-            {{ text }}
-          </template>
-          <template slot="roleProject" slot-scope="text">
-            {{ text }}
-          </template>
-          <template slot="projectName" slot-scope="text">
-            {{ text }}
-          </template>
-          <template slot="actualWorkDay" slot-scope="text">
-            {{ text }}
-          </template>
-          <template slot="rateJoin" slot-scope="text">
-            {{ text }}
-          </template>
-        </a-table>
-      </template> -->
     </a-table>
   </a-card>
 </template>
@@ -285,3 +253,8 @@ export default {
   }
 };
 </script>
+<style>
+.notification-unread {
+  background: rgba(224, 248, 232, 1);
+}
+</style>
