@@ -8,10 +8,11 @@
     "dev": "nuxt",
     "dev-it": "cross-env NODE_ENV=it nuxt",
     "prod": "cross-env NODE_ENV=prod nuxt",
-    "build": "yarn install; yarn message; cross-env NODE_ENV=development nuxt build",
+    "build": "cross-env NODE_ENV=development nuxt build",
     "build-it": "yarn install; yarn message; cross-env NODE_ENV=it nuxt build",
     "build-prod": "yarn install; yarn message; cross-env NODE_ENV=prod nuxt build",
-    "start": "nuxt start",
+    "preview": "nuxt start",
+    "start": "node .output/server/index.mjs",
     "generate": "nuxt generate",
     "message": "node tools/gen-message"
   },
