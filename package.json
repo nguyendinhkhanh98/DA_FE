@@ -8,7 +8,7 @@
     "dev": "nuxt",
     "dev-it": "cross-env NODE_ENV=it nuxt",
     "prod": "cross-env NODE_ENV=prod nuxt",
-    "build": "cross-env NODE_ENV=development nuxt build",
+    "build": "yarn install; yarn message; cross-env NODE_ENV=development nuxt build",
     "build-it": "yarn install; yarn message; cross-env NODE_ENV=it nuxt build",
     "build-prod": "yarn install; yarn message; cross-env NODE_ENV=prod nuxt build",
     "start": "nuxt start",
