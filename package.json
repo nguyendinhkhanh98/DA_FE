@@ -1,8 +1,8 @@
 {
-  "name": "jira-qcd-client",
+  "name": "da-client",
   "version": "1.0.0",
-  "description": "Jira Qcd Client",
-  "author": "anhbv",
+  "description": "DA Client",
+  "author": "khanhnd",
   "private": true,
   "scripts": {
     "dev": "nuxt",

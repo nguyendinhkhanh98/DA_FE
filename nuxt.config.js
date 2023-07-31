@@ -8,14 +8,14 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: process.env.TITLE || "Jira QCD",
+    title: process.env.TITLE || "DATN",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1" },
       {
         hid: "description",
         name: "description",
-        content: process.env.DESCRIPTION || "Jira QCD"
+        content: process.env.DESCRIPTION || "DATN"
       }
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
@@ -95,7 +95,7 @@ export default {
   },
   env: { ...parsed },
   server: {
-    port: 3030
+    port: 3000
   },
   router: {
     middleware: ["lang"]
