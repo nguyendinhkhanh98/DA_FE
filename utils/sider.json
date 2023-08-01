@@ -3,15 +3,7 @@
     "key": "home",
     "name": "dashboard",
     "a-icon": "dashboard",
-    "link": "/",
-    "items": []
-  },
-  {
-    "key": "register-calendar",
-    "name": "register_calendar",
-    "a-icon": "calendar",
-    "link": "/register-calendar",
-    "items": []
+    "link": "/"
   },
   {
     "key": "jira-integration",

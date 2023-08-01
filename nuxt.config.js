@@ -95,7 +95,7 @@ export default {
   },
   env: { ...parsed },
   server: {
-    port: 3000
+    port: 3200
   },
   router: {
     middleware: ["lang"]

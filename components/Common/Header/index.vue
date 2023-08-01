@@ -1,8 +1,52 @@
 <template>
   <a-row class="header-content">
-    <div class="ant-col-xs-0 ant-col-sm-0 ant-col-md-18 ant-col-lg-19 ant-col-xl-19 ant-col-xxl-20">
-      <a-menu mode="horizontal" class="w-100">
-        <SiderNode v-for="menu of siders" :menuItemData="menu" :role="role" :key="menu.key" :parent-node="true" />
+    <div class="ant-col-xs-0 ant-col-sm-0 ant-col-md-18 ant-col-lg-19 ant-col-xl-19 ant-col-xxl-20 menu-header">
+      <a-menu mode="horizontal" class="w-30" v-for="menuItemData of siders" :key="menuItemData.key">
+        <!-- <SiderNode v-for="menu of siders" :menuItemData="menu" :role="role" :key="menu.key" :parent-node="true" /> -->
+        <a-sub-menu
+          v-if="menuItemData?.items && menuItemData?.items?.length && isRender(menuItemData.key)"
+          :ref="menuItemData.key"
+          :key="menuItemData.key"
+        >
+          <span slot="title" :class="{ 'mr-3': !parentNode, 'menu-title': true }">
+            <a-icon v-if="menuItemData['a-icon']" :type="menuItemData['a-icon']" />
+            <i v-else :class="menuItemData.icon"></i>
+            <span :class="{ 'sider-text-header': parentNode }">
+              <span>{{ $t(menuItemData.name) }}</span>
+            </span>
+          </span>
+          <!-- eslint-disable -->
+          <a-sub-menu
+            v-for="item of menuItemData?.items"
+            :key="item.key"
+            v-if="isRender(item.key) && item?.items?.length"
+            :ref="item.key"
+          >
+            <a-menu-item class="menu-title" v-if="item.link" :to="item.link">
+              <a-icon v-if="item['a-icon']" :type="item['a-icon']" />
+              <i v-else :class="item.icon"></i>
+              <span :class="{ 'sider-text-header': parentNode }">{{ $t(item.name) }}</span>
+            </a-menu-item>
+          </a-sub-menu>
+          <a-menu-item v-else-if="isRender(item.key) && !item?.items?.length" :ref="item.key" :key="`${item.key}`">
+            <nuxt-link class="menu-title" v-if="item.link" :to="item.link">
+              <a-icon v-if="item['a-icon']" :type="item['a-icon']" />
+              <i v-else :class="item.icon"></i>
+              <span :class="{ 'sider-text-header': parentNode }">{{ $t(item.name) }}</span>
+            </nuxt-link>
+          </a-menu-item>
+        </a-sub-menu>
+        <a-menu-item
+          v-else-if="isRender(menuItemData.key) && !menuItemData?.items?.length"
+          :ref="menuItemData.key"
+          :key="`${menuItemData.key}`"
+        >
+          <nuxt-link class="menu-title" v-if="menuItemData.link" :to="menuItemData.link">
+            <a-icon v-if="menuItemData['a-icon']" :type="menuItemData['a-icon']" />
+            <i v-else :class="menuItemData.icon"></i>
+            <span :class="{ 'sider-text-header': parentNode }">{{ $t(menuItemData.name) }}</span>
+          </nuxt-link>
+        </a-menu-item>
       </a-menu>
     </div>
 
@@ -27,14 +71,82 @@
       </a-dropdown>
 
       <a-dropdown class="mt-2" overlayClassName="cust-menu" :trigger="['click']">
-        <a-menu slot="overlay" mode="horizontal">
+        <!-- <a-menu slot="overlay" mode="horizontal">
           <SiderNode
             v-for="company of companyNav"
             :menuItemData="company"
             :role="role"
             :key="company.key"
             :parent-node="false"
-        /></a-menu>
+        /></a-menu> -->
+
+        <!-- eslint-disable -->
+        <a-menu mode="horizontal" slot="overlay">
+          <a-sub-menu
+            v-if="menuItemData?.items && menuItemData?.items?.length && isRender(menuItemData.key)"
+            :ref="menuItemData.key"
+            v-for="menuItemData of companyNav"
+            :key="menuItemData.key"
+          >
+            <span slot="title" :class="{ 'mr-3': !parentNode, 'menu-title': true }">
+              <a-icon v-if="menuItemData['a-icon']" :type="menuItemData['a-icon']" />
+              <i v-else :class="menuItemData.icon"></i>
+              <span :class="{ 'sider-text-header': parentNode }">
+                <span>{{ $t(menuItemData.name) }}</span>
+              </span>
+            </span>
+            <a-sub-menu
+              v-for="item of menuItemData?.items"
+              :key="item.key"
+              v-if="isRender(item.key) && item?.items?.length"
+              :ref="item.key"
+            >
+              <span slot="title" :class="{ 'mr-3': !parentNode, 'menu-title': true }">
+                <a-icon v-if="item['a-icon']" :type="item['a-icon']" />
+                <i v-else :class="item.icon"></i>
+                <span :class="{ 'sider-text-header': parentNode }">
+                  <span>{{ $t(item.name) }}</span>
+                </span>
+              </span>
+
+              <!-- level 3 -->
+
+              <a-sub-menu v-for="i of item?.items" :key="i.key" v-if="isRender(i.key) && i?.items?.length" :ref="i.key">
+                <a-menu-item class="menu-title" v-if="i.link" :to="i.link">
+                  <a-icon v-if="i['a-icon']" :type="i['a-icon']" />
+                  <i v-else :class="i.icon"></i>
+                  <span :class="{ 'sider-text-header': parentNode }">{{ $t(i.name) }}</span>
+                </a-menu-item>
+              </a-sub-menu>
+              <a-menu-item v-else-if="isRender(i.key) && !i?.items?.length" :ref="i.key" :key="`${i.key}`">
+                <nuxt-link class="menu-title" v-if="i.link" :to="i.link">
+                  <a-icon v-if="i['a-icon']" :type="i['a-icon']" />
+                  <i v-else :class="i.icon"></i>
+                  <span :class="{ 'sider-text-header': parentNode }">{{ $t(i.name) }}</span>
+                </nuxt-link>
+              </a-menu-item>
+              <!-- end -->
+            </a-sub-menu>
+            <a-menu-item v-else-if="isRender(item.key) && !item?.items?.length" :ref="item.key" :key="`${item.key}`">
+              <nuxt-link class="menu-title" v-if="item.link" :to="item.link">
+                <a-icon v-if="item['a-icon']" :type="item['a-icon']" />
+                <i v-else :class="item.icon"></i>
+                <span :class="{ 'sider-text-header': parentNode }">{{ $t(item.name) }}</span>
+              </nuxt-link>
+            </a-menu-item>
+          </a-sub-menu>
+          <a-menu-item
+            v-else-if="isRender(menuItemData.key) && !menuItemData?.items?.length"
+            :ref="menuItemData.key"
+            :key="`${menuItemData.key}`"
+          >
+            <nuxt-link class="menu-title" v-if="menuItemData.link" :to="menuItemData.link">
+              <a-icon v-if="menuItemData['a-icon']" :type="menuItemData['a-icon']" />
+              <i v-else :class="menuItemData.icon"></i>
+              <span :class="{ 'sider-text-header': parentNode }">{{ $t(menuItemData.name) }}</span>
+            </nuxt-link>
+          </a-menu-item>
+        </a-menu>
 
         <a-tooltip title="Admin area" :getPopupContainer="a => a.parentNode">
           <a-button style="margin-left: 8px" icon="bank" shape="circle" />
@@ -131,6 +243,7 @@ import Ja from "@/components/Common/Language/ja.vue";
 import SelectProject from "@/components/Common/SelectProject";
 import SiderNode from "@/components/Common/Sider/SiderNode.vue";
 import Navigation from "@/components/Common/Navigation";
+import author from "@/utils/author";
 
 export default {
   data() {
@@ -286,27 +399,27 @@ export default {
                   link: "/business-skill-set/category"
                 }
               ]
-            },
-            {
-              key: "skill-set-sumarry-report-by-user",
-              name: "download_skill_set_by_user",
-              icon: "fas fa-download mr-2",
-              link: "",
-              items: [
-                {
-                  key: "skill-set_summary",
-                  name: "export_skill_set_summary",
-                  icon: "fas fa-download mr-2",
-                  link: "/skill-set/download-skill-set-summary"
-                },
-                {
-                  key: "skill-set-individual",
-                  name: "export_skill_set_individual",
-                  icon: "fas fa-download mr-2",
-                  link: "/skill-set/download-skill-set-by-user"
-                }
-              ]
             }
+            // {
+            //   key: "skill-set-sumarry-report-by-user",
+            //   name: "download_skill_set_by_user",
+            //   icon: "fas fa-download mr-2",
+            //   link: "",
+            //   items: [
+            //     {
+            //       key: "skill-set_summary",
+            //       name: "export_skill_set_summary",
+            //       icon: "fas fa-download mr-2",
+            //       link: "/skill-set/download-skill-set-summary"
+            //     },
+            //     {
+            //       key: "skill-set-individual",
+            //       name: "export_skill_set_individual",
+            //       icon: "fas fa-download mr-2",
+            //       link: "/skill-set/download-skill-set-by-user"
+            //     }
+            //   ]
+            // }
           ]
         },
         {
@@ -383,7 +496,9 @@ export default {
         //   ]
         // }
       ],
-      isDrawerVisible: false
+      isDrawerVisible: false,
+      parentNode: true,
+      isOnMobile: false
     };
   },
   components: {
@@ -430,6 +545,19 @@ export default {
       this.$moment.locale(lang);
       this.setLanguage(lang);
       localStorage.setItem("lang", lang);
+    },
+    isRender(screenKey) {
+      if ((screenKey == "project-role-config" || screenKey == "create-task") && !this.role.includes("admin"))
+        return false;
+
+      if (!author[screenKey]) return true;
+      let permissions = author[screenKey]["view-access"];
+
+      // find with array permission or user
+      for (const key in permissions) {
+        if (permissions[key] == 1 && this.role.indexOf(key) >= 0) return true;
+      }
+      return false;
     }
   }
 };
@@ -510,5 +638,8 @@ export default {
 }
 .mobile-menu .ant-menu-item {
   margin-top: 14px;
+}
+.menu-header {
+  display: flex;
 }
 </style>

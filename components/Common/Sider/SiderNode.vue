@@ -1,6 +1,6 @@
 <template>
   <a-sub-menu
-    v-if="menuItemData.items && menuItemData.items.length && isRender(menuItemData.key)"
+    v-if="menuItemData?.items && menuItemData?.items.length && isRender(menuItemData.key)"
     :ref="menuItemData.key"
     :key="menuItemData.key"
   >
@@ -12,13 +12,14 @@
         <i v-if="parentNode && !isOnMobile" class="fas fa-angle-down ml-1"></i>
       </span>
     </span>
-
-    <template v-for="item of menuItemData.items">
-      <sider-node :menuItemData="item" :key="item.key" :role="role" />
-    </template>
+    <sider-node v-for="item of menuItemData?.items" :key="item.key" :menuItemData="item" :role="role" />
   </a-sub-menu>
 
-  <a-menu-item v-else-if="isRender(menuItemData.key)" :ref="menuItemData.key" :key="menuItemData.key">
+  <a-menu-item
+    v-else-if="isRender(menuItemData.key) && !menuItemData?.items.length"
+    :ref="menuItemData.key"
+    :key="`${menuItemData.key}`"
+  >
     <nuxt-link class="menu-title" v-if="menuItemData.link" :to="menuItemData.link">
       <a-icon v-if="menuItemData['a-icon']" :type="menuItemData['a-icon']" />
       <i v-else :class="menuItemData.icon"></i>
@@ -88,6 +89,9 @@ export default {
         onCancel() {}
       });
     }
+  },
+  created() {
+    console.log("menuItemData", this.menuItemData);
   }
 };
 </script>
