@@ -8,10 +8,10 @@
     "dev": "nuxt",
     "dev-it": "cross-env NODE_ENV=it nuxt",
     "prod": "cross-env NODE_ENV=prod nuxt",
-    "build": "yarn install; yarn message; cross-env NODE_ENV=development nuxt build",
+    "build": "nuxt build --openssl-legacy-provider",
     "build-it": "yarn install; yarn message; cross-env NODE_ENV=it nuxt build",
     "build-prod": "yarn install; yarn message; cross-env NODE_ENV=prod nuxt build",
-    "start": "nuxt start --openssl-legacy-provider",
+    "start": "nuxt start",
     "generate": "nuxt generate",
     "message": "node tools/gen-message"
   },
