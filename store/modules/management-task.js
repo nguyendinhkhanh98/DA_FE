@@ -111,7 +111,7 @@ export const actions = {
     return await this.$request.post(`/api/v2/files`, payload);
   },
   async getFile({ commit }, path) {
-    return await this.$request.get(`/api/v2/files/${path}`);
+    return await this.$request.get(`/api/v2/files?path=${path}`);
   },
   async deleteFile({ commit }, path) {
     return await this.$request.delete(`/api/v2/files/${path}`);
