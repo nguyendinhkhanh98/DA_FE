@@ -43,8 +43,8 @@
       <template slot="attackCol" slot-scope="listFiles">
         <div v-if="listFiles && listFiles.length">
           <div v-for="(item, index) in listFiles" :key="index">
-            <span class="text-link pointer" @click="downloadFile(item)">
-              <a-icon type="link" class="mr-1" />{{ item }}</span
+            <span class="text-link pointer" @click="downloadFile(item.secure_url, item.original_filename)">
+              <a-icon type="link" class="mr-1" />{{ item.original_filename }}</span
             >
           </div>
         </div>
@@ -59,8 +59,8 @@
       <template slot="fileReport" slot-scope="listFilesReport">
         <div v-if="listFilesReport && listFilesReport.length">
           <div v-for="(item, index) in listFilesReport" :key="index">
-            <span class="text-link pointer" @click="downloadFile(item)">
-              <a-icon type="link" class="mr-1" />{{ item }}</span
+            <span class="text-link pointer" @click="downloadFile(item.secure_url, item.original_filename)">
+              <a-icon type="link" class="mr-1" />{{ item.original_filename }}</span
             >
           </div>
         </div>
@@ -153,8 +153,8 @@
         <a-form-item :label="$t('attachment')">
           <div v-if="filePath.length">
             <div v-for="(item, index) in filePath" :key="index">
-              <span class="text-link pointer" @click="downloadFile(item)">
-                <a-icon type="link" class="mr-1" />{{ item }}</span
+              <span class="text-link pointer" @click="downloadFile(item.secure_url, item.original_filename)">
+                <a-icon type="link" class="mr-1" />{{ item.original_filename }}</span
               >
               <a-icon
                 class="ml-2"
@@ -178,8 +178,8 @@
         <a-form-item :label="$t('file_report')">
           <div v-if="filePathReport.length">
             <div v-for="(item, index) in filePathReport" :key="index">
-              <span class="text-link pointer" @click="downloadFile(item)">
-                <a-icon type="link" class="mr-1" />{{ item }}</span
+              <span class="text-link pointer" @click="downloadFile(item.secure_url, item.original_filename)">
+                <a-icon type="link" class="mr-1" />{{ item.original_filename }}</span
               >
               <a-icon
                 class="ml-2"
@@ -230,6 +230,7 @@
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
 import { mapColorTag, mapColorScoreTag } from "../../components/BusinessSkillSet/const";
+import * as FileSaver from "file-saver";
 export default {
   data() {
     return {
@@ -520,13 +521,13 @@ export default {
         }
       }
     },
-    async downloadFile(path) {
-      const res = await this.getFile(path);
-      if (res.data.error) {
-        this.$notification.error({ message: "File does not exist" });
-        return;
-      }
-      window.open(`${process.env.API_URL}/api/v2/files/${path}`, "_blank");
+    async downloadFile(path, name) {
+      fetch(path, {
+        method: "GET"
+      }).then(async data => {
+        const blob = await data.blob();
+        FileSaver.saveAs(blob, name);
+      });
     },
     async removeFile(path) {
       const index = this.filePath.findIndex(item => item == path);
