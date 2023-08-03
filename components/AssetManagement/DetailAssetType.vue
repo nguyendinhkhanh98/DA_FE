@@ -53,9 +53,9 @@
         {{ mapUser(text) }}
       </template>
 
-      <template slot="company_id" slot-scope="text">
+      <!-- <template slot="company_id" slot-scope="text">
         {{ mapCompany(text) }}
-      </template>
+      </template> -->
 
       <template slot="detail" slot-scope="text">
         <a-button type="primary" @click="goToUserDetail(text)">{{ $t("detail") }}</a-button>
@@ -113,18 +113,18 @@ const columns = [
     },
     defaultChecked: true
   },
-  {
-    slots: { title: "company_id" },
-    dataIndex: "company_id",
-    scopedSlots: { customRender: "company_id" },
-    key: "company_id",
-    onFilter: (value, record) => {
-      let condition = `^${value}$`;
-      let regex = new RegExp(condition);
-      return regex.test(record.company_id);
-    },
-    defaultChecked: false
-  },
+  // {
+  //   slots: { title: "company_id" },
+  //   dataIndex: "company_id",
+  //   scopedSlots: { customRender: "company_id" },
+  //   key: "company_id",
+  //   onFilter: (value, record) => {
+  //     let condition = `^${value}$`;
+  //     let regex = new RegExp(condition);
+  //     return regex.test(record.company_id);
+  //   },
+  //   defaultChecked: false
+  // },
   {
     slots: { title: "" },
     key: "detail",

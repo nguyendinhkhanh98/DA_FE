@@ -73,17 +73,17 @@ export const columns = [
     key: "note",
     defaultChecked: false
   },
-  {
-    slots: { title: "company_id" },
-    dataIndex: "company",
-    key: "company",
-    onFilter: (value, record) => {
-      let condition = `^${value}$`;
-      let regex = new RegExp(condition);
-      return regex.test(record.company);
-    },
-    defaultChecked: false
-  },
+  // {
+  //   slots: { title: "company_id" },
+  //   dataIndex: "company",
+  //   key: "company",
+  //   onFilter: (value, record) => {
+  //     let condition = `^${value}$`;
+  //     let regex = new RegExp(condition);
+  //     return regex.test(record.company);
+  //   },
+  //   defaultChecked: false
+  // },
   {
     slots: { title: "" },
     key: "detail",

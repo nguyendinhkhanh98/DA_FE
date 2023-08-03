@@ -24,7 +24,7 @@
             <span>{{ $t("scan_qr") }}</span>
           </button>
 
-          <a-tooltip placement="top">
+          <!-- <a-tooltip placement="top">
             <template slot="title">
               <span>{{ $t("export_excel") }}</span>
             </template>
@@ -40,7 +40,7 @@
             <a-button :disabled="selectedRowKeys.length <= 0" @click="printItemSelected" type="primary" ghost
               ><i class="fas fa-print"></i
             ></a-button>
-          </a-tooltip>
+          </a-tooltip> -->
 
           <ToggleColumn :columns="columns" @change="onChangeToggleColumn" class="toggle-columns" />
 
