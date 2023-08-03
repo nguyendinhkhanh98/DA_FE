@@ -91,7 +91,7 @@
                 </a-input>
               </a-form-item>
 
-              <a-form-item :label="$t('company_id')" :label-col="labelCol" :wrapper-col="wrapperCol">
+              <!-- <a-form-item :label="$t('company_id')" :label-col="labelCol" :wrapper-col="wrapperCol">
                 <a-select
                   v-decorator="[
                     'company_id',
@@ -105,7 +105,7 @@
                     {{ item.name }}
                   </a-select-option>
                 </a-select>
-              </a-form-item>
+              </a-form-item> -->
 
               <a-form-item :label="$t('note')" :label-col="labelCol" :wrapper-col="wrapperCol" :colon="false">
                 <a-textarea
@@ -323,7 +323,8 @@ export default {
             value[key] = value[key] || "";
           }
           // value.buy_date = value.buy_date.format("L") + " " + value.buy_date.format("LTS");
-          value.buy_date = value.buy_date
+          value.buy_date = value.buy_date;
+          value.company_id = 1;
         }
       });
 
