@@ -457,6 +457,13 @@ export default {
               items: []
             }
           ]
+        },
+        {
+          key: "hr-analysis_history_offwork",
+          name: "analysis_history_offwork",
+          icon: "fas fa-file-excel mr-2",
+          link: "/hr-management/analysis",
+          items: []
         }
         // {
         //   key: "hr-management",
