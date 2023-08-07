@@ -457,26 +457,26 @@ export default {
               items: []
             }
           ]
-        },
-        {
-          key: "hr-management",
-          name: "hr_management",
-          "a-icon": "solution",
-          items: [
-            {
-              key: "analysis-history-offwork",
-              name: "analysis_history_offwork",
-              icon: "fas fa-chart-line mr-2",
-              link: "/hr-management/analysis"
-            },
-            {
-              key: "human-resource-by-project",
-              name: "human_resource_by_project",
-              icon: "fas fa-chart-line mr-2",
-              link: "/hr-management/hr-by-project"
-            }
-          ]
         }
+        // {
+        //   key: "hr-management",
+        //   name: "hr_management",
+        //   "a-icon": "solution",
+        //   items: [
+        //     {
+        //       key: "analysis-history-offwork",
+        //       name: "analysis_history_offwork",
+        //       icon: "fas fa-chart-line mr-2",
+        //       link: "/hr-management/analysis"
+        //     },
+        //     {
+        //       key: "human-resource-by-project",
+        //       name: "human_resource_by_project",
+        //       icon: "fas fa-chart-line mr-2",
+        //       link: "/hr-management/hr-by-project"
+        //     }
+        //   ]
+        // }
         // {
         //   key: "slack-integration",
         //   name: "slack_integration",
