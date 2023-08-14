@@ -13,8 +13,8 @@
               </tr>
             </thead>
             <tbody class="ant-table-tbody">
-              <div v-for="data in dataSource" :key="`${data.id}`">
-                <tr :id="`${data.id}`">
+              <template v-for="data in dataSource">
+                <tr v-if="data.skills.length" :id="`${data.id}`" :key="data.id">
                   <td class="ant-table-row-expand-icon-cell">
                     <div
                       role="button"
@@ -30,13 +30,18 @@
                   </td>
                 </tr>
 
-                <tr class="ant-table-expanded-row" :key="`${data.id}_extra`" :id="`${data.id}_extra`">
+                <tr
+                  class="ant-table-expanded-row"
+                  v-if="data.skills.length"
+                  :key="`${data.id}_extra`"
+                  :id="`${data.id}_extra`"
+                >
                   <td></td>
                   <td colspan="2">
                     <GroupCategory ref="group-category" v-bind="{ record: data }" @change-skill="handleFormChange" />
                   </td>
                 </tr>
-              </div>
+              </template>
             </tbody>
           </table>
         </div>
