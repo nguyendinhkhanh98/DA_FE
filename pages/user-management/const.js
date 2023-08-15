@@ -20,9 +20,9 @@ export const columns = [
     key: "email"
   },
   {
-    slots: { title: "fullName" },
+    slots: { title: "full_name" },
     dataIndex: "fullName",
-    key: "fullName"
+    key: "full_name"
   },
   {
     slots: { title: "phone" },
