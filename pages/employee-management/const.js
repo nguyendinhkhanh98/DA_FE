@@ -20,16 +20,21 @@ export const columns = [
     key: "email"
   },
   {
+    slots: { title: "phone" },
+    dataIndex: "phone",
+    key: "phone"
+  },
+  {
     slots: { title: "role" },
     dataIndex: "role",
     scopedSlots: { customRender: "role", filterDropdown: "filterDropdown", filterIcon: "filterIcon" },
     key: "role"
   },
-  {
-    slots: { title: "jira_email" },
-    dataIndex: "jira_email",
-    key: "jira_email"
-  },
+  // {
+  //   slots: { title: "jira_email" },
+  //   dataIndex: "jira_email",
+  //   key: "jira_email"
+  // },
   {
     slots: { title: "project" },
     dataIndex: "project",
